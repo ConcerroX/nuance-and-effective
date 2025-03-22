@@ -1,0 +1,25 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[4.10,)"
+license = "Insert License Here"
+
+[[mods]]
+modId = "effective"
+version = "${version}"
+displayName = "${name}"
+description = '''
+${description}
+'''
+
+[[dependencies.effective]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.effective]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,)"
+ordering = "NONE"
+side = "BOTH"

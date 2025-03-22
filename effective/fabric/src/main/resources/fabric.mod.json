@@ -1,0 +1,21 @@
+{
+	"schemaVersion": 1,
+	"id": "effective",
+	"version": "${version}",
+	"name": "${name}",
+	"description": "${description}",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"adapter": "kotlin",
+				"value": "concerrox.effective.fabric.EffectiveFabric"
+			}
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.20.1",
+		"java": ">=17"
+	}
+}
