@@ -1,6 +1,7 @@
 package concerrox.effective.mixin;
 
-import concerrox.effective.waterfall.WaterfallManager;
+import concerrox.effective.EffectiveConfig;
+import concerrox.effective.waterfall.CascadeManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Level.class)
-public abstract class WaterfallCloudSpawningMixin {
+public abstract class CascadeCloudSpawningMixin {
 
     @Shadow
     public abstract FluidState getFluidState(BlockPos pos);
@@ -26,9 +27,9 @@ public abstract class WaterfallCloudSpawningMixin {
         BlockPos pos, BlockState state, int flags, int recursionLeft,
         CallbackInfoReturnable<Boolean> cir
     ) {
-        if (cir.getReturnValueZ() && true/*EffectiveConfig.shouldFlowingWaterSpawnParticlesOnFirstTick*/
+        if (cir.getReturnValueZ() && EffectiveConfig.flowingWaterSpawnCascade.get()
             && getFluidState(pos).getType() == Fluids.FLOWING_WATER) {
-            WaterfallManager.INSTANCE.spawnWaterfallCloud(
+            CascadeManager.INSTANCE.spawnCascadeCloud(
                 Level.class.cast(this),
                 null/*new Waterfall(pos, getFluidState(pos).getOwnHeight() / 2f, true, new Color(0xFFFFFF))*/
             );

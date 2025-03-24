@@ -8,7 +8,7 @@ import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.particle.*
 import net.minecraft.core.particles.SimpleParticleType
 
-class WaterfallCloudParticle(
+class CascadeCloudParticle(
     level: ClientLevel,
     x: Double,
     y: Double,
@@ -69,7 +69,7 @@ class WaterfallCloudParticle(
             velocityY: Double,
             velocityZ: Double
         ): Particle {
-            return WaterfallCloudParticle(level, x, y, z, velocityX, velocityY, velocityZ, spriteSet)
+            return CascadeCloudParticle(level, x, y, z, velocityX, velocityY, velocityZ, spriteSet)
         }
     }
 

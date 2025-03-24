@@ -2,8 +2,8 @@ package concerrox.effective.waterfall
 
 import net.minecraft.world.level.Level
 
-object WaterfallManager {
-    fun spawnWaterfallCloud(level: Level, waterfall: Any) {
+object CascadeManager {
+    fun spawnCascadeCloud(level: Level, waterfall: Any) {
 //        val blockPos = waterfall.blockPos()
 //        for (int i = 0; i < EffectiveConfig.cascadeCloudDensity; i++) {
 //            double offsetX = world.getRandom().nextGaussian() / 5f;

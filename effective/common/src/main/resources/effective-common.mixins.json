@@ -5,7 +5,7 @@
 	"minVersion": "0.8",
 	"mixins": [],
 	"client": [
-		"WaterfallCloudSpawningMixin"
+		"CascadeCloudSpawningMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
