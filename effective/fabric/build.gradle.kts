@@ -1,6 +1,7 @@
 import org.gradle.internal.extensions.core.extra
 
 val fabricLoaderVersion: String by rootProject
+val forgeConfigApiPortVersion: String by rootProject
 
 plugins {
     id("com.github.johnrengelman.shadow")
@@ -22,6 +23,7 @@ configurations {
 
 dependencies {
     modImplementation("net.fabricmc:fabric-loader:$fabricLoaderVersion")
+    modApi("fuzs.forgeconfigscreens:forgeconfigscreens-fabric:$forgeConfigApiPortVersion")
     common(project(":effective:common", "namedElements")) { isTransitive = false }
     shadowCommon(project(":effective:common", "transformProductionFabric")) { isTransitive = false }
 }

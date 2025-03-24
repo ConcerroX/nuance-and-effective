@@ -3,6 +3,7 @@ import org.gradle.internal.extensions.core.extra
 val forgeVersion: String by rootProject
 val mixinExtrasVersion: String by rootProject
 val kotlinForForgeVersion: String by rootProject
+val configuredForgeVersion: String by rootProject
 
 plugins {
     id("com.github.johnrengelman.shadow")
@@ -11,6 +12,10 @@ plugins {
 architectury {
     platformSetupLoomIde()
     forge()
+}
+
+loom {
+    accessWidenerPath = project(":effective:common").loom.accessWidenerPath
 }
 
 val common: Configuration by configurations.creating
@@ -31,6 +36,7 @@ dependencies {
     implementation("thedarkcolour:kotlinforforge:$kotlinForForgeVersion")
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:$mixinExtrasVersion")!!)
     implementation(include("io.github.llamalad7:mixinextras-forge:$mixinExtrasVersion")!!)
+    modLocalRuntime("curse.maven:configured-457570:$configuredForgeVersion")
 
     common(project(":effective:common", "namedElements")) { isTransitive = false }
     shadowCommon(project(":effective:common", "transformProductionForge")) { isTransitive = false }

@@ -45,6 +45,9 @@ subprojects {
 
     repositories {
         maven("https://maven.parchmentmc.org")
+        maven("https://maven.terraformersmc.com/")
+        maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/")
+        maven("https://cursemaven.com")
     }
 
     dependencies {
