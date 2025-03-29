@@ -8,7 +8,7 @@ import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.particle.*
 import net.minecraft.core.particles.SimpleParticleType
 
-class CascadeCloudParticle(
+open class CascadeCloudParticle(
     level: ClientLevel,
     x: Double,
     y: Double,
@@ -20,9 +20,10 @@ class CascadeCloudParticle(
 ) : TextureSheetParticle(level, x, y, z, dx, dy, dz) {
 
     init {
-        setParticleSpeed(dx, dy, dz)
         lifetime = 10
         quadSize = 1F
+        alpha = 0.9F
+        setParticleSpeed(dx, dy, dz)
         setSpriteFromAge(spriteSet)
     }
 
@@ -33,10 +34,10 @@ class CascadeCloudParticle(
         yo = y
         zo = z
 
-        if (onGround || (age > 10 && level.isWater(x, y + yd, z))) {
-            xd *= 0.5f
-            yd *= 0.5f
-            zd *= 0.5f
+        if (onGround || level.isWater(x, y + yd, z)) {
+            xd *= 0.5
+            yd *= 0.5
+            zd *= 0.5
         }
         if (level.isWater(x, y + yd, z) && level.isAir(x, y, z)) {
             xd *= 0.9
@@ -44,9 +45,9 @@ class CascadeCloudParticle(
             zd *= 0.9
         }
 
-        xd *= 0.95f
-        yd -= 0.02f
-        zd *= 0.95f
+        xd *= 0.95
+        yd -= 0.02
+        zd *= 0.95
         move(xd, yd, zd)
 
         alpha -= 0.05F

@@ -16,6 +16,9 @@ architectury {
 
 loom {
     accessWidenerPath = project(":effective:common").loom.accessWidenerPath
+    forge {
+        mixinConfig("effective-common.mixins.json")
+    }
 }
 
 val common: Configuration by configurations.creating

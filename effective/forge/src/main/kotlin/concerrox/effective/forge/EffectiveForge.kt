@@ -2,6 +2,8 @@ package concerrox.effective.forge
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import concerrox.effective.Effective
+import concerrox.effective.EffectiveConfig
+import concerrox.effective.level.CascadeManager
 import concerrox.effective.registry.ModParticles
 import concerrox.effective.shader.SoftParticleRenderType
 import net.minecraft.client.gui.screens.OptionsScreen
@@ -12,8 +14,10 @@ import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.core.particles.ParticleType
 import net.minecraftforge.client.ConfigScreenHandler
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent
 import net.minecraftforge.client.event.RegisterShadersEvent
+import net.minecraftforge.event.TickEvent
 import net.minecraftforge.fml.ModLoadingContext
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.config.ModConfig
@@ -31,6 +35,8 @@ object EffectiveForge {
 
     init {
         Effective.onInitialize()
+
+        LOADING_CONTEXT.registerConfig(ModConfig.Type.CLIENT, EffectiveConfig.configSpec)
 
         DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Effective.MOD_ID).apply {
             ModParticles.PARTICLES.forEach {
@@ -51,15 +57,15 @@ object EffectiveForge {
                 SoftParticleRenderType::loadShader)
         }
 
-//        LOADING_CONTEXT.registerConfig(ModConfig.Type.CLIENT, Config.Client.SPEC)
+        FORGE_BUS.addListener { event: TickEvent.ClientTickEvent ->
+            if (event.phase == TickEvent.Phase.END) {
+                CascadeManager.tick()
+            }
+        }
 
-//        MOD_BUS.addListener { event: FMLClientSetupEvent ->
-//            LOADING_CONTEXT.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory::class.java) {
-//                ConfigScreenHandler.ConfigScreenFactory { minecraft, prevScreen ->
-//                    OptionsScreen(prevScreen, null)
-//                }
-//            }
-//        }
+        FORGE_BUS.addListener { _: ClientPlayerNetworkEvent.LoggingOut ->
+            CascadeManager.reset()
+        }
 
     }
 

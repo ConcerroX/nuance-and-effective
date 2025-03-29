@@ -1,7 +1,8 @@
 package concerrox.effective.registry
 
 import concerrox.effective.Effective
-import concerrox.effective.particle.WaterfallCloudParticle
+import concerrox.effective.particle.CascadeCloudParticle
+import concerrox.effective.particle.GlowingCascadeCloudParticle
 import net.minecraft.client.particle.ParticleProvider
 import net.minecraft.client.particle.SpriteSet
 import net.minecraft.core.particles.ParticleOptions
@@ -11,13 +12,14 @@ import net.minecraft.resources.ResourceLocation
 
 object ModParticles {
 
-    val PARTICLES = mutableListOf<ParticleEntry<*>>()
+    val PARTICLES = mutableListOf<ParticleEntry<*, *>>()
 
-    private val WATERFALL_CLOUD by register("waterfall_cloud", WaterfallCloudParticle::Provider) { SimpleParticleType(true) }
+    val CASCADE_CLOUD by register("cascade_cloud", CascadeCloudParticle::Provider) { SimpleParticleType(true) }
+    val GLOWING_CASCADE_CLOUD by register("glowing_cascade_cloud", GlowingCascadeCloudParticle::Provider) { SimpleParticleType(true) }
 
-    private fun <T : ParticleOptions> register(
-        id: String, provider: (SpriteSet) -> ParticleProvider<T>, type: () -> ParticleType<T>
-    ): Lazy<ParticleType<T>> {
+    private fun <I: ParticleType<T>, T : ParticleOptions> register(
+        id: String, provider: (SpriteSet) -> ParticleProvider<T>, type: () -> I
+    ): Lazy<I> {
         val lazyType = lazy { type.invoke() }
         val entry = ParticleEntry(Effective.id(id), lazyType, provider)
         PARTICLES += entry
@@ -25,12 +27,12 @@ object ModParticles {
     }
 
     fun initialize() {
-        WATERFALL_CLOUD
+
     }
 
-    data class ParticleEntry<T : ParticleOptions>(
+    data class ParticleEntry<I: ParticleType<T>, T : ParticleOptions>(
         val id: ResourceLocation,
-        val type: Lazy<ParticleType<T>>,
+        val type: Lazy<I>,
         val provider: (SpriteSet) -> ParticleProvider<T>,
     )
 
