@@ -3,13 +3,16 @@ package concerrox.effective.mixin;
 import concerrox.effective.EffectiveConfig;
 import concerrox.effective.util.LevelUtils;
 import concerrox.effective.util.RandomSourceUtils;
+import concerrox.effective.util.WaterUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.WaterFluid;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -61,24 +64,25 @@ public class SplashesAndRippleSpawningMixin {
             }
         }
 
-//        if (effective$canSpawnRipple(level, pos)) {
-//            if (random.nextInt(10) <= EffectiveConfig.rainRippleDensity.get()) {
-//                if (level.getBiome(pos).value().getPrecipitationAt(pos) == Biome.Precipitation.RAIN
-//                    && level.canSeeSkyFromBelowWater(pos)) {
-//                    WaterUtils.spawnWaterEffect(
-//                        level, BlockPos.containing(Vec3.atCenterOf(pos).add(
-//                            random.nextFloat() - random.nextFloat(),
-//                            .39f,
-//                            random.nextFloat() - random.nextFloat()
-//                        )),
-//                        0f,
-//                        0f,
-//                        0f,
-//                        WaterUtils.WaterEffectType.RIPPLE
-//                    );
-//                }
-//            }
-//        }
+        if (effective$canSpawnRipple(level, pos)) {
+            if (random.nextInt(10) <= EffectiveConfig.rainRippleDensity.get()) {
+                if (level.getBiome(pos).value().getPrecipitationAt(pos) == Biome.Precipitation.RAIN
+                    && level.canSeeSkyFromBelowWater(pos)) {
+                    WaterUtils.INSTANCE.spawnWaterEffect(
+                        level,
+                        Vec3.atCenterOf(pos).add(
+                            random.nextFloat() - random.nextFloat(),
+                            .39f,
+                            random.nextFloat() - random.nextFloat()
+                        ),
+                        0f,
+                        0f,
+                        0f,
+                        WaterUtils.WaterEffectType.RIPPLE
+                    );
+                }
+            }
+        }
     }
 
 }

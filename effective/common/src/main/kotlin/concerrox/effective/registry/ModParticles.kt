@@ -5,8 +5,10 @@ import concerrox.effective.particle.CascadeCloudParticle
 import concerrox.effective.particle.DropletParticle
 import concerrox.effective.particle.GlowingCascadeCloudParticle
 import concerrox.effective.particle.GlowingDropletParticle
+import concerrox.effective.particle.GlowingRippleParticle
 import concerrox.effective.particle.GlowingSplashParticle
 import concerrox.effective.particle.MistParticle
+import concerrox.effective.particle.RippleParticle
 import concerrox.effective.particle.SplashParticle
 import concerrox.effective.particle.type.SplashParticleType
 import net.minecraft.client.particle.ParticleProvider
@@ -28,6 +30,8 @@ object ModParticles {
     val GLOWING_SPLASH by register("glowing_splash", GlowingSplashParticle::Provider) { SplashParticleType(true) }
     val DROPLET by register("droplet", DropletParticle::Provider) { SimpleParticleType(true) }
     val GLOWING_DROPLET by register("glowing_droplet", GlowingDropletParticle::Provider) { SimpleParticleType(true) }
+    val RIPPLE by register("ripple", RippleParticle::Provider) { SimpleParticleType(true) }
+    val GLOWING_RIPPLE by register("glowing_ripple", GlowingRippleParticle::Provider) { SimpleParticleType(true) }
 
     private fun <I : ParticleType<T>, T : ParticleOptions> register(
         id: String, provider: (SpriteSet) -> ParticleProvider<T>, type: () -> I

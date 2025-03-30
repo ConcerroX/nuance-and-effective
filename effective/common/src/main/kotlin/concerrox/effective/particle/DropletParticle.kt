@@ -1,5 +1,6 @@
 package concerrox.effective.particle
 
+import concerrox.effective.registry.ModParticles
 import concerrox.effective.util.isAir
 import concerrox.effective.util.isWater
 import net.fabricmc.api.EnvType
@@ -48,7 +49,7 @@ open class DropletParticle(
                 val pos = BlockPos.containing(x, (y.roundToInt() + i).toDouble(), z)
                 val posAbove = BlockPos.containing(x, (y.roundToInt() + i + 1).toDouble(), z)
                 if (level.isWater(pos) && level.getFluidState(pos).isSource && level.isAir(posAbove)) {
-//                    level.addParticle(ModParticles.RIPPLE, x, Math.round(y) + i + 0.9, z, 0.0, 0.0, 0.0)
+                    level.addParticle(ModParticles.RIPPLE, x, Math.round(y) + i + 0.9, z, 0.0, 0.0, 0.0)
                     break
                 }
             }

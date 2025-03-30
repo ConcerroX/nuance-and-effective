@@ -1,6 +1,7 @@
 package concerrox.effective.util
 
 import concerrox.effective.EffectiveConfig
+import concerrox.effective.registry.ModParticles
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LightLayer
@@ -34,17 +35,17 @@ object WaterUtils {
     fun spawnWaterEffect(
         level: Level, pos: Vec3, velocityX: Double, velocityY: Double, velocityZ: Double, waterEffect: WaterEffectType
     ) {
-//        var particle: SimpleParticleType = when (waterEffect) {
-//            WaterEffectType.DROPLET -> ModParticles.DROPLET
-//            WaterEffectType.RIPPLE -> ModParticles.RIPPLE
-//        }
-//        if (isGlowingWater(level, pos)) {
-//            particle = when (waterEffect) {
-//                WaterEffectType.DROPLET -> ModParticles.GLOW_DROPLET
-//                WaterEffectType.RIPPLE -> ModParticles.GLOW_RIPPLE
-//            }
-//        }
-//        level.addParticle(particle, pos.x, pos.y, pos.z, velocityX, velocityY, velocityZ)
+        var particle = when (waterEffect) {
+            WaterEffectType.DROPLET -> ModParticles.DROPLET
+            WaterEffectType.RIPPLE -> ModParticles.RIPPLE
+        }
+        if (isGlowingWater(level, BlockPos.containing(pos))) {
+            particle = when (waterEffect) {
+                WaterEffectType.DROPLET -> ModParticles.GLOWING_DROPLET
+                WaterEffectType.RIPPLE -> ModParticles.GLOWING_RIPPLE
+            }
+        }
+        level.addParticle(particle, pos.x, pos.y, pos.z, velocityX, velocityY, velocityZ)
     }
 
 }
