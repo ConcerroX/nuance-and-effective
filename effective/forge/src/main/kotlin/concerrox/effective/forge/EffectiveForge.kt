@@ -3,7 +3,7 @@ package concerrox.effective.forge
 import concerrox.effective.Effective
 import concerrox.effective.EffectiveConfig
 import concerrox.effective.forge.shader.ModShaders2
-import concerrox.effective.level.CascadeManager
+import concerrox.effective.world.CascadeManager
 import concerrox.effective.particle.model.SplashBottomModel
 import concerrox.effective.particle.model.SplashBottomRimModel
 import concerrox.effective.particle.model.SplashModel
@@ -20,7 +20,6 @@ import net.minecraftforge.client.event.EntityRenderersEvent
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent
 import net.minecraftforge.client.event.RegisterShadersEvent
 import net.minecraftforge.event.TickEvent
-import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.config.ModConfig
 import net.minecraftforge.registries.DeferredRegister

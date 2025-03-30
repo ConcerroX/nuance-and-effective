@@ -3,6 +3,7 @@ package concerrox.effective.registry
 import concerrox.effective.Effective
 import concerrox.effective.particle.CascadeCloudParticle
 import concerrox.effective.particle.GlowingCascadeCloudParticle
+import concerrox.effective.particle.GlowingSplashParticle
 import concerrox.effective.particle.MistParticle
 import concerrox.effective.particle.SplashParticle
 import concerrox.effective.particle.type.SplashParticleType
@@ -22,6 +23,7 @@ object ModParticles {
         GlowingCascadeCloudParticle::Provider) { SimpleParticleType(true) }
     val MIST by register("mist", MistParticle::Provider) { SimpleParticleType(true) }
     val SPLASH by register("splash", SplashParticle::Provider) { SplashParticleType(true) }
+    val GLOWING_SPLASH by register("glowing_splash", GlowingSplashParticle::Provider) { SplashParticleType(true) }
 
     private fun <I : ParticleType<T>, T : ParticleOptions> register(
         id: String, provider: (SpriteSet) -> ParticleProvider<T>, type: () -> I

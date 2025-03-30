@@ -1,7 +1,7 @@
 package concerrox.effective.mixin;
 
 import concerrox.effective.EffectiveConfig;
-import concerrox.effective.level.CascadeManager;
+import concerrox.effective.world.CascadeManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;

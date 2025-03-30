@@ -1,4 +1,4 @@
-package concerrox.effective.level
+package concerrox.effective.world
 
 import concerrox.effective.EffectiveConfig
 import concerrox.effective.util.nextDoubleOrNegative
@@ -77,7 +77,7 @@ object SplashSpawner {
      */
     private fun spawnSplash(world: Level, x: Double, y: Double, z: Double, data: SplashParticleInitialData?) {
         val splash = if (WaterUtils.isGlowingWater(world,
-                BlockPos(x.toInt(), y.toInt(), z.toInt()))) ModParticles.SPLASH else ModParticles.SPLASH
+                BlockPos(x.toInt(), y.toInt(), z.toInt()))) ModParticles.GLOWING_SPLASH else ModParticles.SPLASH
         world.addParticle(splash.apply { initialData = data }, x, y, z, 0.0, 0.0, 0.0)
     }
 }

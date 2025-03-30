@@ -34,7 +34,7 @@ import org.joml.Vector3f
 import java.awt.Color
 import kotlin.math.roundToInt
 
-class SplashParticle(world: ClientLevel, x: Double, y: Double, z: Double) : Particle(world, x, y, z) {
+open class SplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) : Particle(level, x, y, z) {
 
     private val models: EntityModelSet = Minecraft.getInstance().entityModels
     var widthMultiplier: Float
@@ -119,7 +119,7 @@ class SplashParticle(world: ClientLevel, x: Double, y: Double, z: Double) : Part
             0.9F)
 
         val rimModelConsumer = bufferSource.getBuffer(rimLayer)
-        val rimColor = Color(0xFFFFFFFF.toInt())
+        val rimColor = getRimColor(blockPos)
         waveRimModel.renderToBuffer(modelRimMatrix, rimModelConsumer, rimLight, OverlayTexture.NO_OVERLAY,
             rimColor.redFloat, rimColor.greenFloat, rimColor.blueFloat, rimColor.alphaFloat)
         waveBottomRimModel.renderToBuffer(modelRimBottomMatrix, rimModelConsumer, rimLight, OverlayTexture.NO_OVERLAY,
@@ -178,8 +178,12 @@ class SplashParticle(world: ClientLevel, x: Double, y: Double, z: Double) : Part
         }
     }
 
-    private fun getRimBrightness(tickDelta: Float): Int {
+    open fun getRimBrightness(tickDelta: Float): Int {
         return getLightColor(tickDelta)
+    }
+
+    open fun getRimColor(pos: BlockPos): Color {
+        return Color(0xFFFFFFFF.toInt())
     }
 
 //    val dropletParticle: ParticleEffect
