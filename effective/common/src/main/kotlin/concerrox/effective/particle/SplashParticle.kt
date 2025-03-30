@@ -3,15 +3,17 @@ package concerrox.effective.particle
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import concerrox.effective.Effective
-import concerrox.effective.util.alphaFloat
-import concerrox.effective.util.blueFloat
-import concerrox.effective.util.greenFloat
-import concerrox.effective.util.redFloat
 import concerrox.effective.particle.model.SplashBottomModel
 import concerrox.effective.particle.model.SplashBottomRimModel
 import concerrox.effective.particle.model.SplashModel
 import concerrox.effective.particle.model.SplashRimModel
 import concerrox.effective.particle.type.SplashParticleType
+import concerrox.effective.registry.ModParticles
+import concerrox.effective.util.alphaFloat
+import concerrox.effective.util.blueFloat
+import concerrox.effective.util.greenFloat
+import concerrox.effective.util.nextDoubleOrNegative
+import concerrox.effective.util.redFloat
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.Camera
@@ -155,24 +157,23 @@ open class SplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) :
 
         if (age == 1) {
             var i = 0
-            while (i < widthMultiplier * 10f) {
-//                level.addParticle(dropletParticle,
-//                    x + (EffectiveUtils.getRandomFloatOrNegative(random) * widthMultiplier / 5f), y,
-//                    z + (EffectiveUtils.getRandomFloatOrNegative(random) * widthMultiplier / 5f),
-//                    EffectiveUtils.getRandomFloatOrNegative(random) / 5f * widthMultiplier / 2.5f,
-//                    random.nextFloat() / 10f + heightMultiplier / 2.8f,
-//                    EffectiveUtils.getRandomFloatOrNegative(random) / 10f * widthMultiplier / 2.5f)
+            while (i < widthMultiplier * 10.0) {
+                level.addParticle(getDropletParticle(), x + (random.nextDoubleOrNegative() * widthMultiplier / 5f), y,
+                    z + (random.nextDoubleOrNegative() * widthMultiplier / 5.0),
+                    random.nextDoubleOrNegative() / 5.0 * widthMultiplier / 2.5,
+                    random.nextDouble() / 10.0 + heightMultiplier / 2.8,
+                    random.nextDoubleOrNegative() / 10.0 * widthMultiplier / 2.5)
                 i++
             }
         } else if (age == wave2Start) {
             var i = 0
-            while (i < widthMultiplier * 5f) {
-//                world.addParticle(dropletParticle,
-//                    x + (EffectiveUtils.getRandomFloatOrNegative(random) * widthMultiplier / 5f * .5f), y,
-//                    z + (EffectiveUtils.getRandomFloatOrNegative(random) * widthMultiplier / 5f * .5f),
-//                    EffectiveUtils.getRandomFloatOrNegative(random) / 10f * widthMultiplier / 5f,
-//                    random.nextFloat() / 10f + heightMultiplier / 2.2f,
-//                    EffectiveUtils.getRandomFloatOrNegative(random) / 10f * widthMultiplier / 5f)
+            while (i < widthMultiplier * 5.0) {
+                level.addParticle(getDropletParticle(),
+                    x + (random.nextDoubleOrNegative() * widthMultiplier / 5.0 * 0.5), y,
+                    z + (random.nextDoubleOrNegative() * widthMultiplier / 5.0 * 0.5),
+                    random.nextDoubleOrNegative() / 10.0 * widthMultiplier / 5.0,
+                    random.nextDouble() / 10.0 + heightMultiplier / 2.2,
+                    random.nextDoubleOrNegative() / 10.0 * widthMultiplier / 5.0)
                 i++
             }
         }
@@ -186,8 +187,9 @@ open class SplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) :
         return Color(0xFFFFFFFF.toInt())
     }
 
-//    val dropletParticle: ParticleEffect
-//        get() = EffectiveParticles.DROPLET
+    open fun getDropletParticle(): SimpleParticleType {
+        return ModParticles.DROPLET
+    }
 
     @Environment(EnvType.CLIENT)
     internal class Provider(private val spriteSet: SpriteSet) : ParticleProvider<SimpleParticleType> {

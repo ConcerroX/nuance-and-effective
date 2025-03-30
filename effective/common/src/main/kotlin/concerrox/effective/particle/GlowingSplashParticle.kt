@@ -1,6 +1,7 @@
 package concerrox.effective.particle
 
 import concerrox.effective.particle.type.SplashParticleType
+import concerrox.effective.registry.ModParticles
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.multiplayer.ClientLevel
@@ -25,9 +26,9 @@ class GlowingSplashParticle(level: ClientLevel, x: Double, y: Double, z: Double)
         return Color(redAndGreen, redAndGreen, bCol, 1F)
     }
 
-//    override fun getDropletParticle(): ParticleEffect {
-//        return EffectiveParticles.GLOW_DROPLET
-//    }
+    override fun getDropletParticle(): SimpleParticleType {
+        return ModParticles.GLOWING_DROPLET
+    }
 
     @Environment(EnvType.CLIENT)
     internal class Provider(spriteSet: SpriteSet) : ParticleProvider<SimpleParticleType> {
