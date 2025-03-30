@@ -1,13 +1,13 @@
 package concerrox.effective.level
 
 import concerrox.effective.EffectiveConfig
-import concerrox.effective.extension.isAir
-import concerrox.effective.extension.isInBlockTag
-import concerrox.effective.extension.isWaterFluid
+import concerrox.effective.util.isAir
+import concerrox.effective.util.isInBlockTag
+import concerrox.effective.util.isWaterFluid
 import concerrox.effective.registry.ModParticles
 import concerrox.effective.registry.ModSounds
 import concerrox.effective.sound.CascadeSoundInstance
-import concerrox.effective.util.GlowUtils
+import concerrox.effective.util.WaterUtils
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientLevel
@@ -170,7 +170,7 @@ object CascadeManager {
             val offsetX = random.nextGaussian() / 5.0
             val offsetY = random.nextDouble()
             val offsetZ = random.nextGaussian() / 5.0
-            val particle = if (GlowUtils.isGlowingWater(level, cascade.blockPos)) {
+            val particle = if (WaterUtils.isGlowingWater(level, cascade.blockPos)) {
                 ModParticles.GLOWING_CASCADE_CLOUD
             } else {
                 ModParticles.CASCADE_CLOUD

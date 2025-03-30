@@ -1,4 +1,4 @@
-package concerrox.effective.extension
+package concerrox.effective.util
 
 import net.minecraftforge.common.ForgeConfigSpec
 

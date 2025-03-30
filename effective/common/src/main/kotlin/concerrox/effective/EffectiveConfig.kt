@@ -1,7 +1,7 @@
 package concerrox.effective
 
-import concerrox.effective.extension.ForgeConfigSpec
-import concerrox.effective.extension.category
+import concerrox.effective.util.ForgeConfigSpec
+import concerrox.effective.util.category
 import net.minecraftforge.common.ForgeConfigSpec
 
 object EffectiveConfig {
@@ -10,7 +10,7 @@ object EffectiveConfig {
             category("waterEffects") {
                 isSplashesEnabled = define("isSplashesEnabled", true)
 
-                dropletSplashingThreshold = defineInRange("dropletSplashingThreshold", 0.3, 0.0, 5.0)
+                splashThreshold = defineInRange("splashThreshold", 0.3, 0.0, 5.0)
                 dropletSplashingDensity = defineInRange("dropletSplashingDensity", 50, 0, 100)
 
                 isCascadesEnabled = define("isCascadesEnabled", true)
@@ -32,8 +32,8 @@ object EffectiveConfig {
     }
 
     lateinit var isSplashesEnabled: ForgeConfigSpec.BooleanValue
+    lateinit var splashThreshold: ForgeConfigSpec.DoubleValue
 
-    lateinit var dropletSplashingThreshold: ForgeConfigSpec.DoubleValue
     lateinit var dropletSplashingDensity: ForgeConfigSpec.IntValue
 
     lateinit var isCascadesEnabled: ForgeConfigSpec.BooleanValue

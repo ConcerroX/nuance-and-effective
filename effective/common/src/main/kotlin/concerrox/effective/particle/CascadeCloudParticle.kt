@@ -1,7 +1,7 @@
 package concerrox.effective.particle
 
-import concerrox.effective.extension.isAir
-import concerrox.effective.extension.isWater
+import concerrox.effective.util.isAir
+import concerrox.effective.util.isWater
 import concerrox.effective.render.ModParticleRenderTypes
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment

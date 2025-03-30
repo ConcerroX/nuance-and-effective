@@ -1,6 +1,6 @@
 @file:JvmName("LevelUtils")
 
-package concerrox.effective.extension
+package concerrox.effective.util
 
 import net.minecraft.core.BlockPos
 import net.minecraft.tags.TagKey

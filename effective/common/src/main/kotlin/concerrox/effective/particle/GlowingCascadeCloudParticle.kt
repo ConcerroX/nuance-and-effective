@@ -1,6 +1,6 @@
 package concerrox.effective.particle
 
-import concerrox.effective.util.GlowUtils
+import concerrox.effective.util.WaterUtils
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.multiplayer.ClientLevel
@@ -23,7 +23,7 @@ class GlowingCascadeCloudParticle(
 ) : CascadeCloudParticle(level, x, y, z, dx, dy, dz, spriteSet) {
 
     init {
-        val color = GlowUtils.getGlowingWaterColor(level, BlockPos.containing(x, y, z))
+        val color = WaterUtils.getGlowingWaterColor(level, BlockPos.containing(x, y, z))
         rCol = color.red / 255f
         gCol = color.green / 255f
         bCol = color.blue / 255f

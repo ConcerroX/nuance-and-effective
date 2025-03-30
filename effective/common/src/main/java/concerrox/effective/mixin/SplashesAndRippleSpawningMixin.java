@@ -1,14 +1,13 @@
 package concerrox.effective.mixin;
 
 import concerrox.effective.EffectiveConfig;
-import concerrox.effective.extension.LevelUtils;
-import concerrox.effective.extension.RandomSourceUtils;
+import concerrox.effective.util.LevelUtils;
+import concerrox.effective.util.RandomSourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.WaterFluid;
 import org.spongepowered.asm.mixin.Mixin;
@@ -62,25 +61,24 @@ public class SplashesAndRippleSpawningMixin {
             }
         }
 
-        if (effective$canSpawnRipple(level, pos)) {
-            if (random.nextInt(10) <= EffectiveConfig.rainRippleDensity.get()) {
-                if (level.getBiome(pos).value().getPrecipitationAt(pos) == Biome.Precipitation.RAIN
-                    && level.canSeeSkyFromBelowWater(pos)) {
-//                    EffectiveUtils.spawnWaterEffect(
-//                        world,
-//                        Vec3d.ofCenter(pos).add(
+//        if (effective$canSpawnRipple(level, pos)) {
+//            if (random.nextInt(10) <= EffectiveConfig.rainRippleDensity.get()) {
+//                if (level.getBiome(pos).value().getPrecipitationAt(pos) == Biome.Precipitation.RAIN
+//                    && level.canSeeSkyFromBelowWater(pos)) {
+//                    WaterUtils.spawnWaterEffect(
+//                        level, BlockPos.containing(Vec3.atCenterOf(pos).add(
 //                            random.nextFloat() - random.nextFloat(),
 //                            .39f,
 //                            random.nextFloat() - random.nextFloat()
-//                        ),
+//                        )),
 //                        0f,
 //                        0f,
 //                        0f,
-//                        EffectiveUtils.WaterEffectType.RIPPLE
+//                        WaterUtils.WaterEffectType.RIPPLE
 //                    );
-                }
-            }
-        }
+//                }
+//            }
+//        }
     }
 
 }
