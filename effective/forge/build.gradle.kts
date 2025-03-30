@@ -24,6 +24,8 @@ loom {
 val common: Configuration by configurations.creating
 val shadowCommon: Configuration by configurations.creating
 val developmentForge: Configuration by configurations.getting
+
+@Suppress("UnstableApiUsage")
 configurations {
     compileOnly.configure { extendsFrom(common) }
     runtimeOnly.configure { extendsFrom(common) }

@@ -2,3 +2,6 @@ accessWidener v2 named
 accessible method net/minecraft/core/particles/SimpleParticleType <init> (Z)V
 accessible field net/minecraft/client/particle/SingleQuadParticle quadSize F
 accessible class net/minecraft/client/particle/ParticleEngine$SpriteParticleRegistration
+
+accessible field net/minecraft/client/renderer/ShaderInstance uniforms Ljava/util/List;
+extendable method net/minecraft/client/renderer/ShaderInstance parseUniformNode (Lcom/google/gson/JsonElement;)V

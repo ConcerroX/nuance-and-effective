@@ -31,20 +31,16 @@ public class CascadeCloudRefreshMixin {
         if (neighborState.getBlock() == Blocks.LAPIS_BLOCK && state.getBlock() == Blocks.WATER) {
             double chance = EffectiveConfig.lapisBlockUpdateParticleChance.get();
             if (chance > 0F) {
-                effective$gatherWater(
-                    new HashSet<>(),
-                    level,
-                    new BlockPos.MutableBlockPos().set(pos)
-                ).forEach(waterPos -> {
+                var waterSet = effective$gatherWater(new HashSet<>(), level, new BlockPos.MutableBlockPos().set(pos));
+                waterSet.forEach(waterPos -> {
                     if (level.getRandom().nextFloat() * 10f < chance) {
-                        CascadeManager.INSTANCE.scheduleParticleTick(
-                            new CascadeManager.Cascade(
-                                waterPos,
-                                state.getFluidState().getOwnHeight(),
-                                true,
-                                new Color(0xFFFFFF)
-                            ), 1
+                        var cascade = new CascadeManager.Cascade(
+                            waterPos,
+                            state.getFluidState().getOwnHeight(),
+                            true,
+                            new Color(0xFFFFFF)
                         );
+                        CascadeManager.INSTANCE.scheduleParticleTick(cascade, 1);
                     }
                 });
             }
@@ -53,7 +49,9 @@ public class CascadeCloudRefreshMixin {
 
     @Unique
     private Set<BlockPos> effective$gatherWater(
-        Set<BlockPos> flowingWater, LevelAccessor world, BlockPos.MutableBlockPos pos) {
+        Set<BlockPos> flowingWater, LevelAccessor world,
+        BlockPos.MutableBlockPos pos
+    ) {
         if (flowingWater.size() < 1024) {
             int originalX = pos.getX(), originalY = pos.getY(), originalZ = pos.getZ();
             for (Direction direction : Direction.values()) {
