@@ -3,7 +3,7 @@
 	"package": "concerrox.effective.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"minVersion": "0.8",
-	"mixins": ["CascadeCloudRefreshMixin"],
+	"mixins": ["CascadeCloudRefreshMixin", "SplashesAndRippleSpawningMixin"],
 	"client": ["CascadeCloudSpawningMixin", "CascadeGenerationMixin"],
 	"injectors": {
 		"defaultRequire": 1

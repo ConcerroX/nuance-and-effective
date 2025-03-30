@@ -1,3 +1,5 @@
+@file:JvmName("RandomSourceUtils")
+
 package concerrox.effective.extension
 
 import net.minecraft.util.RandomSource

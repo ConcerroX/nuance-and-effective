@@ -13,10 +13,7 @@ import net.minecraft.client.renderer.texture.TextureManager
 object ModParticleRenderTypes {
 
     val ADDITIVE = object : ParticleRenderType {
-        override fun begin(
-            bufferBuilder: BufferBuilder,
-            textureManager: TextureManager,
-        ) {
+        override fun begin(bufferBuilder: BufferBuilder, textureManager: TextureManager) {
             RenderSystem.enableDepthTest()
             RenderSystem.enableBlend()
             RenderSystem.depthMask(true)

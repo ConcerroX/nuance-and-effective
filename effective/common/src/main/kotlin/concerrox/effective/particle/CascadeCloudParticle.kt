@@ -22,7 +22,7 @@ open class CascadeCloudParticle(
     dx: Double,
     dy: Double,
     dz: Double,
-    private val spriteSet: SpriteSet,
+    private val spriteSet: SpriteSet
 ) : TextureSheetParticle(level, x, y, z, dx, dy, dz) {
 
     init {

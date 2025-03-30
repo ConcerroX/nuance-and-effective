@@ -1,3 +1,5 @@
+@file:JvmName("LevelUtils")
+
 package concerrox.effective.extension
 
 import net.minecraft.core.BlockPos

@@ -12,16 +12,16 @@ import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.resources.ResourceLocation
 
 object ModParticles {
+
     val PARTICLES = mutableListOf<ParticleEntry<*, *>>()
 
     val CASCADE_CLOUD by register("cascade_cloud", CascadeCloudParticle::Provider) { SimpleParticleType(true) }
-    val GLOWING_CASCADE_CLOUD by register("glowing_cascade_cloud", GlowingCascadeCloudParticle::Provider) { SimpleParticleType(true) }
+    val GLOWING_CASCADE_CLOUD by register("glowing_cascade_cloud",
+        GlowingCascadeCloudParticle::Provider) { SimpleParticleType(true) }
     val MIST by register("mist", MistParticle::Provider) { SimpleParticleType(true) }
 
     private fun <I : ParticleType<T>, T : ParticleOptions> register(
-        id: String,
-        provider: (SpriteSet) -> ParticleProvider<T>,
-        type: () -> I,
+        id: String, provider: (SpriteSet) -> ParticleProvider<T>, type: () -> I
     ): Lazy<I> {
         val lazyType = lazy { type.invoke() }
         val entry = ParticleEntry(Effective.id(id), lazyType, provider)
@@ -29,12 +29,8 @@ object ModParticles {
         return lazyType
     }
 
-    fun initialize() {
-    }
-
     data class ParticleEntry<I : ParticleType<T>, T : ParticleOptions>(
-        val id: ResourceLocation,
-        val type: Lazy<I>,
-        val provider: (SpriteSet) -> ParticleProvider<T>,
+        val id: ResourceLocation, val type: Lazy<I>, val provider: (SpriteSet) -> ParticleProvider<T>
     )
+
 }

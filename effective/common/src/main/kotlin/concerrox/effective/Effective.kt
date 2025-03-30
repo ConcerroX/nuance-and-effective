@@ -1,8 +1,6 @@
 package concerrox.effective
 
-import concerrox.effective.registry.ModParticles
 import net.minecraft.resources.ResourceLocation
-
 
 object Effective {
 
@@ -13,10 +11,7 @@ object Effective {
     }
 
     fun onInitialize() {
-        ModParticles.initialize()
-//        Minecraft.getInstance().level?.addParticle(
-//            ModParticles.CASCADE.type.invoke(),
-//        )
+
     }
 
 }

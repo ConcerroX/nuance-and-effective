@@ -1,11 +1,9 @@
 package concerrox.effective.level
 
-import com.mojang.logging.LogUtils
 import concerrox.effective.EffectiveConfig
 import concerrox.effective.extension.isAir
 import concerrox.effective.extension.isInBlockTag
 import concerrox.effective.extension.isWaterFluid
-import concerrox.effective.extension.nextDoubleOrNegative
 import concerrox.effective.registry.ModParticles
 import concerrox.effective.registry.ModSounds
 import concerrox.effective.sound.CascadeSoundInstance
@@ -99,7 +97,7 @@ object CascadeManager {
 
     fun tryToAddCascadeGenerator(fluidState: FluidState, pos: BlockPos) {
         val level = Minecraft.getInstance().level
-        if (!EffectiveConfig.isCascadeEnabled.get() || fluidState.type !== Fluids.FLOWING_WATER || level == null) {
+        if (!EffectiveConfig.isCascadesEnabled.get() || fluidState.type !== Fluids.FLOWING_WATER || level == null) {
             return
         }
         val cascadeOrNull = createCascade(level, pos, fluidState)
@@ -115,7 +113,7 @@ object CascadeManager {
         val isSilent: Boolean
         var mistColor = Color(0xFFFFFF)
 
-        if (!EffectiveConfig.isCascadeEnabled.get() || fluidState.type != Fluids.FLOWING_WATER || player == null) {
+        if (!EffectiveConfig.isCascadesEnabled.get() || fluidState.type != Fluids.FLOWING_WATER || player == null) {
             return null
         }
         val isInRenderDistance = sqrt(pos.distSqr(player.blockPosition())) <= minecraft.options.renderDistance()
