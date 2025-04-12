@@ -6,10 +6,14 @@
 	"mixins": [
 	],
 	"client": [
+		"allay.GoldenAllayMixin",
 		"chest.UnderwaterChestRandomOpeningMixin",
 		"chest.UnderwaterEnderChestRandomOpeningMixin",
 		"chest.UnderwaterOpenChestBubbleSpawningMixin",
 		"chest.UnderwaterOpenEnderChestBubbleSpawningMixin",
+		"glowsquid.GlowSquidHypnosisManagerMixin",
+		"glowsquid.JebGlowSquidHypnosisMixin",
+		"glowsquid.JebGlowSquidRenderLayerMixin",
 		"water.CascadeCloudRefreshMixin",
 		"water.CascadeCloudSpawningMixin",
 		"water.CascadeGenerationMixin",

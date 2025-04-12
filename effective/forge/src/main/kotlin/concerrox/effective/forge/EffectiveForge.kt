@@ -2,8 +2,11 @@ package concerrox.effective.forge
 
 import concerrox.effective.Effective
 import concerrox.effective.EffectiveConfig
+import concerrox.effective.effect.CascadeManager
+import concerrox.effective.effect.GlowSquidHypnosisManager
 import concerrox.effective.forge.shader.ModShaders2
 import concerrox.effective.forge.shader.ParticleEngineClientExtensions
+import concerrox.effective.isSatinInstalled
 import concerrox.effective.particle.model.SplashBottomModel
 import concerrox.effective.particle.model.SplashBottomRimModel
 import concerrox.effective.particle.model.SplashModel
@@ -11,7 +14,8 @@ import concerrox.effective.particle.model.SplashRimModel
 import concerrox.effective.registry.ModParticles
 import concerrox.effective.registry.ModSounds
 import concerrox.effective.render.ModShaders
-import concerrox.effective.effect.CascadeManager
+import ladysnake.satin.api.event.EntitiesPreRenderCallback
+import ladysnake.satin.api.event.ShaderEffectRenderCallback
 import net.minecraft.client.Minecraft
 import net.minecraft.client.particle.ParticleEngine
 import net.minecraft.client.particle.ParticleProvider
@@ -37,13 +41,14 @@ import thedarkcolour.kotlinforforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import java.util.function.Supplier
 
+
 @Mod(Effective.MOD_ID)
 object EffectiveForge {
 
 
     private val PARTICLE_RESOURCE_KEY: ResourceKey<Registry<ParticleType<*>>> = ResourceKey.createRegistryKey(
         Effective.id("particle_type"))
-    val PARTICLE_REGISTRY: DeferredRegister<ParticleType<*>> = DeferredRegister.create(PARTICLE_RESOURCE_KEY,
+    private val PARTICLE_REGISTRY: DeferredRegister<ParticleType<*>> = DeferredRegister.create(PARTICLE_RESOURCE_KEY,
         Effective.MOD_ID)
 
     // Disable the syncing of the registry to prevent "unregistered object on dedicated server"
@@ -113,6 +118,25 @@ object EffectiveForge {
 
         FORGE_BUS.addListener { _: ClientPlayerNetworkEvent.LoggingOut ->
             CascadeManager.reset()
+        }
+
+        if (isSatinInstalled()) {
+            GlowSquidHypnosisManager.RAINBOW_SHADER // Force to load the shader
+
+            FORGE_BUS.addListener { event: TickEvent.ClientTickEvent ->
+                if (event.phase == TickEvent.Phase.END) {
+                    GlowSquidHypnosisManager.rainbowTimer++
+                }
+            }
+
+            FORGE_BUS.addListener { event: ShaderEffectRenderCallback ->
+                GlowSquidHypnosisManager.onShaderEffectRendered(event.tickDelta)
+            }
+
+            FORGE_BUS.addListener { event: EntitiesPreRenderCallback ->
+                GlowSquidHypnosisManager.rainbowSTime.set(
+                    (GlowSquidHypnosisManager.rainbowTimer + event.tickDelta) * 0.05F)
+            }
         }
     }
 }

@@ -23,7 +23,8 @@ object EffectiveConfig {
                 isGlowingPlanktonEnabled = define("isGlowingPlanktonEnabled", true)
 
                 underwaterOpenChestBubbles = define("underwaterOpenChestBubbles", true)
-                underwaterChestsOpenRandomly = defineEnum("underwaterChestsOpenRandomly", ChestsOpenOptions.ON_SOUL_SAND)
+                underwaterChestsOpenRandomly = defineEnum("underwaterChestsOpenRandomly",
+                    ChestsOpenOptions.ON_SOUL_SAND)
             }
             category("entityEffects") {
                 glowSquidHypnosis = defineEnum("glowSquidHypnosis", GlowSquidHypnosisOptions.ATTRACT)
@@ -93,5 +94,9 @@ object EffectiveConfig {
 
     enum class AllayTrailOptions {
         BOTH, TRAIL, TWINKLE, NONE
+    }
+
+    fun canGlowSquidsHypnotize(): Boolean {
+        return glowSquidHypnosis.get() == GlowSquidHypnosisOptions.ATTRACT || glowSquidHypnosis.get() == GlowSquidHypnosisOptions.VISUAL
     }
 }
