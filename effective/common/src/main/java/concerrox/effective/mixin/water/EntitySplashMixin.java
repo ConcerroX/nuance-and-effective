@@ -1,7 +1,7 @@
-package concerrox.effective.mixin;
+package concerrox.effective.mixin.water;
 
 import concerrox.effective.EffectiveConfig;
-import concerrox.effective.world.SplashSpawner;
+import concerrox.effective.effect.SplashSpawner;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;

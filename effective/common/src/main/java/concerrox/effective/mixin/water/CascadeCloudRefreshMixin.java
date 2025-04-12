@@ -1,7 +1,7 @@
-package concerrox.effective.mixin;
+package concerrox.effective.mixin.water;
 
 import concerrox.effective.EffectiveConfig;
-import concerrox.effective.world.CascadeManager;
+import concerrox.effective.effect.CascadeManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;

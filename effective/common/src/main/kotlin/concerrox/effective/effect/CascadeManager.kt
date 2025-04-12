@@ -1,4 +1,4 @@
-package concerrox.effective.world
+package concerrox.effective.effect
 
 import concerrox.effective.EffectiveConfig
 import concerrox.effective.util.isAir

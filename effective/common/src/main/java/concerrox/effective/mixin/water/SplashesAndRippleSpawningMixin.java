@@ -1,4 +1,4 @@
-package concerrox.effective.mixin;
+package concerrox.effective.mixin.water;
 
 import concerrox.effective.EffectiveConfig;
 import concerrox.effective.util.LevelUtils;

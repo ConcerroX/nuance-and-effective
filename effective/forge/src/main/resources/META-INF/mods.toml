@@ -15,7 +15,7 @@ modId = "forge"
 mandatory = true
 versionRange = "[47,)"
 ordering = "NONE"
-side = "BOTH"
+side = "CLIENT"
 
 [[dependencies.effective]]
 modId = "minecraft"

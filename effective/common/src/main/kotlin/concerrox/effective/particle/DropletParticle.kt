@@ -53,7 +53,6 @@ open class DropletParticle(
                     break
                 }
             }
-
             remove()
         }
 

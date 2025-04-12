@@ -1,7 +1,7 @@
-package concerrox.effective.mixin;
+package concerrox.effective.mixin.water;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import concerrox.effective.world.CascadeManager;
+import concerrox.effective.effect.CascadeManager;
 import net.minecraft.client.renderer.block.LiquidBlockRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;

@@ -21,13 +21,41 @@ object EffectiveConfig {
 
                 rainRippleDensity = defineInRange("rainRippleDensity", 1, 0, 10)
                 isGlowingPlanktonEnabled = define("isGlowingPlanktonEnabled", true)
+
                 underwaterOpenChestBubbles = define("underwaterOpenChestBubbles", true)
-//                underwaterChestsOpenRandomly
+                underwaterChestsOpenRandomly = defineEnum("underwaterChestsOpenRandomly", ChestsOpenOptions.ON_SOUL_SAND)
+            }
+            category("entityEffects") {
+                glowSquidHypnosis = defineEnum("glowSquidHypnosis", GlowSquidHypnosisOptions.ATTRACT)
+                allayTrails = defineEnum("allayTrails", AllayTrailOptions.BOTH)
+                goldenAllays = define("goldenAllays", true)
+            }
+            category("screenShakeEffects") {
+
+            }
+            category("illuminatedEffects") {
+
+            }
+            category("improvementEffects") {
+
+            }
+            category("miscellaneousEffects") {
+
             }
         }
+
         category("audio") {
-            cascadeSoundsVolume = defineInRange("cascadeSoundsVolume", 30, 0, 100)
-            cascadeSoundDistanceBlocks = defineInRange("cascadeSoundDistanceBlocks", 100, 0, 400)
+            category("cascadeAudio") {
+                cascadeSoundsVolume = defineInRange("cascadeSoundsVolume", 30, 0, 100)
+                cascadeSoundDistanceBlocks = defineInRange("cascadeSoundDistanceBlocks", 100, 0, 400)
+            }
+            category("biomeAmbienceAudio") {
+
+            }
+        }
+
+        category("dynamicLights") {
+
         }
     }
 
@@ -44,8 +72,26 @@ object EffectiveConfig {
 
     lateinit var rainRippleDensity: ForgeConfigSpec.IntValue
     lateinit var isGlowingPlanktonEnabled: ForgeConfigSpec.BooleanValue
+
     lateinit var underwaterOpenChestBubbles: ForgeConfigSpec.BooleanValue
+    lateinit var underwaterChestsOpenRandomly: ForgeConfigSpec.EnumValue<ChestsOpenOptions>
+
+    lateinit var glowSquidHypnosis: ForgeConfigSpec.EnumValue<GlowSquidHypnosisOptions>
+    lateinit var allayTrails: ForgeConfigSpec.EnumValue<AllayTrailOptions>
+    lateinit var goldenAllays: ForgeConfigSpec.BooleanValue
 
     lateinit var cascadeSoundsVolume: ForgeConfigSpec.IntValue
     lateinit var cascadeSoundDistanceBlocks: ForgeConfigSpec.IntValue
+
+    enum class ChestsOpenOptions {
+        ON_SOUL_SAND, RANDOMLY, NEVER
+    }
+
+    enum class GlowSquidHypnosisOptions {
+        ATTRACT, VISUAL, NEVER
+    }
+
+    enum class AllayTrailOptions {
+        BOTH, TRAIL, TWINKLE, NONE
+    }
 }
