@@ -5,3 +5,11 @@ accessible class net/minecraft/client/particle/ParticleEngine$SpriteParticleRegi
 
 accessible field net/minecraft/client/renderer/ShaderInstance uniforms Ljava/util/List;
 extendable method net/minecraft/client/renderer/ShaderInstance parseUniformNode (Lcom/google/gson/JsonElement;)V
+
+accessible field net/minecraft/world/level/block/entity/ChestBlockEntity openersCounter Lnet/minecraft/world/level/block/entity/ContainerOpenersCounter;
+accessible field net/minecraft/world/level/block/entity/ChestBlockEntity chestLidController Lnet/minecraft/world/level/block/entity/ChestLidController;
+accessible field net/minecraft/world/level/block/entity/EnderChestBlockEntity openersCounter Lnet/minecraft/world/level/block/entity/ContainerOpenersCounter;
+accessible field net/minecraft/world/level/block/entity/EnderChestBlockEntity chestLidController Lnet/minecraft/world/level/block/entity/ChestLidController;
+
+accessible class net/minecraft/client/particle/ParticleEngine$MutableSpriteSet
+accessible method net/minecraft/client/particle/ParticleEngine$MutableSpriteSet <init> ()V

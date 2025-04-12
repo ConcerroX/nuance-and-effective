@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "concerrox.effective.forge.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"minVersion": "0.8",
+	"mixins": [
+	],
+	"client": [
+		"ParticleEngineMixin",
+		"SimpleParticleTypeMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
