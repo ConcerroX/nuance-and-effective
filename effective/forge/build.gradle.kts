@@ -4,6 +4,7 @@ val forgeVersion: String by rootProject
 val mixinExtrasVersion: String by rootProject
 val kotlinForForgeVersion: String by rootProject
 val configuredForgeVersion: String by rootProject
+val satinForgeVersion: String by rootProject
 
 plugins {
     id("com.github.johnrengelman.shadow")
@@ -17,7 +18,7 @@ architectury {
 loom {
     accessWidenerPath = project(":effective:common").loom.accessWidenerPath
     forge {
-        mixinConfig("effective-common.mixins.json")
+        mixinConfig("effective-common.mixins.json", "effective.mixins.json")
     }
 }
 
@@ -34,6 +35,7 @@ configurations {
 
 repositories {
     maven("https://thedarkcolour.github.io/KotlinForForge/")
+    maven("https://repo.constructlegacy.ru/public")
 }
 
 dependencies {
@@ -42,6 +44,7 @@ dependencies {
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:$mixinExtrasVersion")!!)
     implementation(include("io.github.llamalad7:mixinextras-forge:$mixinExtrasVersion")!!)
     modLocalRuntime("curse.maven:configured-457570:$configuredForgeVersion")
+    modApi("com.github.dima_dencep.mods:satin-forge:$satinForgeVersion")
 
     common(project(":effective:common", "namedElements")) { isTransitive = false }
     shadowCommon(project(":effective:common", "transformProductionForge")) { isTransitive = false }

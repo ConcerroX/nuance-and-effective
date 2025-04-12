@@ -2,6 +2,7 @@ val enabledPlatforms: String by rootProject
 val fabricLoaderVersion: String by rootProject
 val forgeConfigApiPortVersion: String by rootProject
 val effectiveModId: String by rootProject
+val satinVersion: String by rootProject
 
 architectury {
     common(enabledPlatforms.split(","))
@@ -17,4 +18,5 @@ dependencies {
     // Do NOT use other classes from Fabric Loader.
     modImplementation("net.fabricmc:fabric-loader:$fabricLoaderVersion")
     modApi("fuzs.forgeconfigscreens:forgeconfigscreens-common:$forgeConfigApiPortVersion")
+    modCompileOnly("org.ladysnake:satin:$satinVersion")
 }
