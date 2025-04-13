@@ -17,9 +17,6 @@ object WaterUtils {
         DROPLET, RIPPLE,
     }
 
-    private val Level.isNightTime
-        get() = getSunAngle(dayTime.toFloat()) >= 0.25965086 && getTimeOfDay(dayTime.toFloat()) <= 0.7403491
-
     fun isGlowingWater(level: Level, pos: BlockPos): Boolean {
         return EffectiveConfig.isGlowingPlanktonEnabled.get() && level.isNightTime && level.getBiome(pos)
             .`is`(Biomes.WARM_OCEAN)

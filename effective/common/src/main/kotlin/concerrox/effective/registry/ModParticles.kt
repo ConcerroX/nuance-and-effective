@@ -19,6 +19,7 @@ import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.core.particles.ParticleType
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.resources.ResourceLocation
+import org.ladysnake.effective.particle.FireflyParticle
 
 object ModParticles {
 
@@ -36,6 +37,7 @@ object ModParticles {
     val GLOWING_RIPPLE by register("glowing_ripple", GlowingRippleParticle::Provider) { SimpleParticleType(true) }
     val BUBBLE by register("bubble", BubbleParticle::Provider) { SimpleParticleType(true) }
     val END_BUBBLE by register("end_bubble", EndBubbleParticle::Provider) { SimpleParticleType(true) }
+    val FIREFLY by register("firefly", FireflyParticle::Provider) { SimpleParticleType(true) }
 
     private fun <I : ParticleType<T>, T : ParticleOptions> register(
         id: String, provider: (SpriteSet) -> ParticleProvider<T>, type: () -> I

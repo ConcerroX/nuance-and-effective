@@ -5,6 +5,17 @@ import concerrox.effective.util.category
 import net.minecraftforge.common.ForgeConfigSpec
 
 object EffectiveConfig {
+
+    private val DEFAULT_FIREFLY_SPAWN_SETTINGS = listOf("minecraft:plains,LOW,#91BD59",
+        "minecraft:sunflower_plains,LOW,#91BD59", "minecraft:old_growth_pine_taiga,LOW,#BFFF00",
+        "minecraft:old_growth_spruce_taiga,LOW,#BFFF00", "minecraft:taiga,LOW,#BFFF00",
+        "minecraft:forest,MEDIUM,#BFFF00", "minecraft:flower_forest,MEDIUM,#FF7FED",
+        "minecraft:birch_forest,MEDIUM,#E4FF00", "minecraft:dark_forest,MEDIUM,#006900",
+        "minecraft:old_growth_birch_forest,MEDIUM,#E4FF00", "minecraft:jungle,MEDIUM,#00FF21",
+        "minecraft:sparse_jungle,MEDIUM,#00FF21", "minecraft:bamboo_jungle,MEDIUM,#00FF21",
+        "minecraft:lush_caves,MEDIUM,#F2B646", "minecraft:swamp,HIGH,#BFFF00", "minecraft:mangrove_swamp,HIGH,#BFFF00",
+        "mariposa:redwood_forest,MEDIUM,#BFFF00")
+
     val configSpec = ForgeConfigSpec {
         category("visuals") {
             category("waterEffects") {
@@ -39,7 +50,11 @@ object EffectiveConfig {
                 dragonScreenShake = define("dragonScreenShake", true)
             }
             category("illuminatedEffects") {
-
+                fireflyDensity = defineInRange("fireflyDensity", 1.0, 0.0, 10.0)
+                fireflySpawnSettings = defineList("fireflySpawnSettings", DEFAULT_FIREFLY_SPAWN_SETTINGS) { it is String }
+                chorusPetalDensity = defineInRange("chorusPetalDensity", 1.0, 0.0, 10.0)
+                willOWispDensity = defineInRange("willOWispDensity", 1.0, 0.0, 10.0)
+                eyesInTheDark = defineEnum("eyesInTheDark", EyesInTheDarkOptions.HALLOWEEN)
             }
             category("improvementEffects") {
 
@@ -91,6 +106,12 @@ object EffectiveConfig {
     lateinit var ravagerScreenShake: ForgeConfigSpec.BooleanValue
     lateinit var dragonScreenShake: ForgeConfigSpec.BooleanValue
 
+    lateinit var fireflyDensity: ForgeConfigSpec.DoubleValue
+    lateinit var fireflySpawnSettings: ForgeConfigSpec.ConfigValue<List<String>>
+    lateinit var chorusPetalDensity: ForgeConfigSpec.DoubleValue
+    lateinit var willOWispDensity: ForgeConfigSpec.DoubleValue
+    lateinit var eyesInTheDark: ForgeConfigSpec.EnumValue<EyesInTheDarkOptions>
+
     lateinit var cascadeSoundsVolume: ForgeConfigSpec.IntValue
     lateinit var cascadeSoundDistanceBlocks: ForgeConfigSpec.IntValue
 
@@ -104,6 +125,10 @@ object EffectiveConfig {
 
     enum class AllayTrailOptions {
         BOTH, TRAIL, TWINKLE, NONE
+    }
+
+    enum class EyesInTheDarkOptions {
+        HALLOWEEN, ALWAYS, NEVER
     }
 
     fun canGlowSquidsHypnotize(): Boolean {

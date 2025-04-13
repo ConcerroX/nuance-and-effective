@@ -12,17 +12,18 @@
 		"allay.GoldenAllayMixin",
 		"chest.UnderwaterChestRandomOpeningMixin",
 		"chest.UnderwaterEnderChestRandomOpeningMixin",
-		"chest.UnderwaterOpenChestBubbleSpawningMixin",
-		"chest.UnderwaterOpenEnderChestBubbleSpawningMixin",
+		"chest.UnderwaterOpenChestBubbleSpawnMixin",
+		"chest.UnderwaterOpenEnderChestBubbleSpawnMixin",
+		"illuminated.IlluminatedEffectsSpawnMixin",
 		"glowsquid.GlowSquidHypnosisManagerMixin",
 		"glowsquid.JebGlowSquidHypnosisMixin",
 		"glowsquid.JebGlowSquidRenderLayerMixin",
 		"screenshake.CameraScreenShakeMixin",
 		"water.CascadeCloudRefreshMixin",
-		"water.CascadeCloudSpawningMixin",
+		"water.CascadeCloudSpawnMixin",
 		"water.CascadeGenerationMixin",
 		"water.EntitySplashMixin",
-		"water.SplashesAndRippleSpawningMixin"
+		"water.SplashesAndRippleSpawnMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

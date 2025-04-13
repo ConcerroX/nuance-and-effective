@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.awt.*;
 
 @Mixin(Level.class)
-public abstract class CascadeCloudSpawningMixin {
+public abstract class CascadeCloudSpawnMixin {
 
     @Shadow
     public abstract FluidState getFluidState(BlockPos pos);

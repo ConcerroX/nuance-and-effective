@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WaterFluid.class)
-public class SplashesAndRippleSpawningMixin {
+public class SplashesAndRippleSpawnMixin {
 
     @Unique
     private static boolean effective$canSpawnSplashes(Level level, BlockPos pos) {
