@@ -32,7 +32,11 @@ object EffectiveConfig {
                 goldenAllays = define("goldenAllays", true)
             }
             category("screenShakeEffects") {
-
+                screenShakeIntensity = defineInRange("screenShakeIntensity", 1.0, 0.0, 5.0)
+                wardenScreenShake = define("wardenScreenShake", true)
+                sonicBoomScreenShake = define("sonicBoomScreenShake", true)
+                ravagerScreenShake = define("ravagerScreenShake", true)
+                dragonScreenShake = define("dragonScreenShake", true)
             }
             category("illuminatedEffects") {
 
@@ -80,6 +84,12 @@ object EffectiveConfig {
     lateinit var glowSquidHypnosis: ForgeConfigSpec.EnumValue<GlowSquidHypnosisOptions>
     lateinit var allayTrails: ForgeConfigSpec.EnumValue<AllayTrailOptions>
     lateinit var goldenAllays: ForgeConfigSpec.BooleanValue
+
+    lateinit var screenShakeIntensity: ForgeConfigSpec.DoubleValue
+    lateinit var wardenScreenShake: ForgeConfigSpec.BooleanValue
+    lateinit var sonicBoomScreenShake: ForgeConfigSpec.BooleanValue
+    lateinit var ravagerScreenShake: ForgeConfigSpec.BooleanValue
+    lateinit var dragonScreenShake: ForgeConfigSpec.BooleanValue
 
     lateinit var cascadeSoundsVolume: ForgeConfigSpec.IntValue
     lateinit var cascadeSoundDistanceBlocks: ForgeConfigSpec.IntValue

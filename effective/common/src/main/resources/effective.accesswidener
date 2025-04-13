@@ -13,3 +13,5 @@ accessible field net/minecraft/world/level/block/entity/EnderChestBlockEntity ch
 
 accessible class net/minecraft/client/particle/ParticleEngine$MutableSpriteSet
 accessible method net/minecraft/client/particle/ParticleEngine$MutableSpriteSet <init> ()V
+
+accessible method net/minecraft/client/Camera setRotation (FF)V

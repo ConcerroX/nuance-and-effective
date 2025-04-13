@@ -14,6 +14,7 @@ import concerrox.effective.particle.model.SplashRimModel
 import concerrox.effective.registry.ModParticles
 import concerrox.effective.registry.ModSounds
 import concerrox.effective.render.ModShaders
+import concerrox.effective.screenshake.ScreenShakeManager
 import ladysnake.satin.api.event.EntitiesPreRenderCallback
 import ladysnake.satin.api.event.ShaderEffectRenderCallback
 import net.minecraft.client.Minecraft
@@ -113,6 +114,7 @@ object EffectiveForge {
         FORGE_BUS.addListener { event: TickEvent.ClientTickEvent ->
             if (event.phase == TickEvent.Phase.END) {
                 CascadeManager.tick()
+                ScreenShakeManager.tick()
             }
         }
 
