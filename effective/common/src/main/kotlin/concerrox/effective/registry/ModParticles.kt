@@ -3,6 +3,7 @@ package concerrox.effective.registry
 import concerrox.effective.Effective
 import concerrox.effective.particle.BubbleParticle
 import concerrox.effective.particle.CascadeCloudParticle
+import concerrox.effective.particle.ChorusPetalParticle
 import concerrox.effective.particle.DropletParticle
 import concerrox.effective.particle.EndBubbleParticle
 import concerrox.effective.particle.GlowingCascadeCloudParticle
@@ -38,6 +39,7 @@ object ModParticles {
     val BUBBLE by register("bubble", BubbleParticle::Provider) { SimpleParticleType(true) }
     val END_BUBBLE by register("end_bubble", EndBubbleParticle::Provider) { SimpleParticleType(true) }
     val FIREFLY by register("firefly", FireflyParticle::Provider) { SimpleParticleType(true) }
+    val CHORUS_PETAL by register("chorus_petal", ChorusPetalParticle::Provider) { SimpleParticleType(true) }
 
     private fun <I : ParticleType<T>, T : ParticleOptions> register(
         id: String, provider: (SpriteSet) -> ParticleProvider<T>, type: () -> I

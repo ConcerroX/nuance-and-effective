@@ -12,6 +12,8 @@ import net.minecraft.world.level.material.Fluids
 internal val Level.isNightTime
     get() = getSunAngle(dayTime.toFloat()) >= 0.25965086 && getTimeOfDay(dayTime.toFloat()) <= 0.7403491
 
+internal fun Level.getBlockState(x: Double, y: Double, z: Double) = getBlockState(BlockPos.containing(x, y, z))
+
 internal fun Level.isBlock(x: Double, y: Double, z: Double, block: Block) = isBlock(BlockPos.containing(x, y, z), block)
 internal fun Level.isBlock(pos: BlockPos, block: Block) = getBlockState(pos).`is`(block)
 
