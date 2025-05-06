@@ -8,6 +8,7 @@ import concerrox.effective.registry.ModParticles
 import concerrox.effective.registry.ModSounds
 import concerrox.effective.sound.CascadeSoundInstance
 import concerrox.effective.util.WaterUtils
+import concerrox.effective.util.isInCave
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientLevel
@@ -49,7 +50,7 @@ object CascadeManager {
                 if (it.isSilent || distance > EffectiveConfig.cascadeSoundDistanceBlocks.get() || EffectiveConfig.cascadeSoundsVolume.get() == 0 || EffectiveConfig.cascadeSoundDistanceBlocks.get() == 0) {
                     return@forEach
                 }
-                if (isInCave(level, it.blockPos) == isInCave(level, player.blockPosition()) && level.random.nextInt(
+                if (level.isInCave(it.blockPos) == level.isInCave(player.blockPosition()) && level.random.nextInt(
                         200) == 0) {
                     // make it so cascades underground can only be heard by players underground, and surface cascades can only be heard by players on the surface
                     val sound = CascadeSoundInstance.ambient(soundEvent = ModSounds.AMBIENT_CASCADE,
@@ -64,24 +65,6 @@ object CascadeManager {
             }
         }
     }
-
-    // method to check if the player has a stone material type block above them, more reliable to
-    // detect caves compared to isSkyVisible (okay nvm they removed materials we're using pickaxe mine-able instead lmao oh god this is
-    // going to be so unreliable)
-    private fun hasStoneAbove(level: Level, pos: BlockPos): Boolean {
-        val mutable = pos.mutable()
-        val startY = mutable.y
-        for (y in startY..startY + 100) {
-            mutable.setY(y)
-            val state = level.getBlockState(mutable)
-            if (state.isRedstoneConductor(level, pos) && state.`is`(BlockTags.MINEABLE_WITH_PICKAXE)) {
-                return true
-            }
-        }
-        return false
-    }
-
-    private fun isInCave(level: Level, pos: BlockPos): Boolean = pos.y < level.seaLevel && hasStoneAbove(level, pos)
 
     private fun tickParticles(level: ClientLevel) {
         scheduledGenerators.keys.forEach {

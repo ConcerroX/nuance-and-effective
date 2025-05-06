@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.biome.Biome
-import org.ladysnake.effective.particle.FireflyParticle
+import concerrox.effective.particle.FireflyParticle
 import java.awt.Color
 
 object IlluminatedEffectsSpawner {

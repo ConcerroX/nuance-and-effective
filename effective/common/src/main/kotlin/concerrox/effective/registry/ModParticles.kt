@@ -20,7 +20,7 @@ import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.core.particles.ParticleType
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.resources.ResourceLocation
-import org.ladysnake.effective.particle.FireflyParticle
+import concerrox.effective.particle.FireflyParticle
 
 object ModParticles {
 

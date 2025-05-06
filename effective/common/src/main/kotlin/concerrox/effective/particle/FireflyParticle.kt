@@ -1,4 +1,4 @@
-package org.ladysnake.effective.particle
+package concerrox.effective.particle
 
 import concerrox.effective.effect.IlluminatedEffectsSpawner
 import concerrox.effective.util.isNightTime

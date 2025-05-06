@@ -59,6 +59,7 @@ object EffectiveForge {
 
     init {
         Effective.onInitialize()
+        ModAmbientConditionsForge.initialize()
 
         LOADING_CONTEXT.registerConfig(ModConfig.Type.CLIENT, EffectiveConfig.configSpec)
 

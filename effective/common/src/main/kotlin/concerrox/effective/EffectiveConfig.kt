@@ -39,7 +39,7 @@ object EffectiveConfig {
             }
             category("entityEffects") {
                 glowSquidHypnosis = defineEnum("glowSquidHypnosis", GlowSquidHypnosisOptions.ATTRACT)
-                allayTrails = defineEnum("allayTrails", AllayTrailOptions.BOTH)
+                allayTrails = defineEnum("allayTrails", TrailOptions.BOTH)
                 goldenAllays = define("goldenAllays", true)
             }
             category("screenShakeEffects") {
@@ -57,7 +57,7 @@ object EffectiveConfig {
                 eyesInTheDark = defineEnum("eyesInTheDark", EyesInTheDarkOptions.HALLOWEEN)
             }
             category("improvementEffects") {
-
+//                spectralArrowTrails = defineEnum("spectralArrowTrails", TrailOptions.BOTH)
             }
             category("miscellaneousEffects") {
 
@@ -70,7 +70,10 @@ object EffectiveConfig {
                 cascadeSoundDistanceBlocks = defineInRange("cascadeSoundDistanceBlocks", 100, 0, 400)
             }
             category("biomeAmbienceAudio") {
-
+                windAmbienceVolume = defineInRange("windAmbienceVolume", 100, 0, 100)
+                waterAmbienceVolume = defineInRange("waterAmbienceVolume", 100, 0, 100)
+                foliageAmbienceVolume = defineInRange("foliageAmbienceVolume", 100, 0, 100)
+                animalAmbienceVolume = defineInRange("animalAmbienceVolume", 100, 0, 100)
             }
         }
 
@@ -97,7 +100,7 @@ object EffectiveConfig {
     lateinit var underwaterChestsOpenRandomly: ForgeConfigSpec.EnumValue<ChestsOpenOptions>
 
     lateinit var glowSquidHypnosis: ForgeConfigSpec.EnumValue<GlowSquidHypnosisOptions>
-    lateinit var allayTrails: ForgeConfigSpec.EnumValue<AllayTrailOptions>
+    lateinit var allayTrails: ForgeConfigSpec.EnumValue<TrailOptions>
     lateinit var goldenAllays: ForgeConfigSpec.BooleanValue
 
     lateinit var screenShakeIntensity: ForgeConfigSpec.DoubleValue
@@ -115,6 +118,11 @@ object EffectiveConfig {
     lateinit var cascadeSoundsVolume: ForgeConfigSpec.IntValue
     lateinit var cascadeSoundDistanceBlocks: ForgeConfigSpec.IntValue
 
+    lateinit var windAmbienceVolume: ForgeConfigSpec.IntValue
+    lateinit var waterAmbienceVolume: ForgeConfigSpec.IntValue
+    lateinit var foliageAmbienceVolume: ForgeConfigSpec.IntValue
+    lateinit var animalAmbienceVolume: ForgeConfigSpec.IntValue
+
     enum class ChestsOpenOptions {
         ON_SOUL_SAND, RANDOMLY, NEVER
     }
@@ -123,7 +131,7 @@ object EffectiveConfig {
         ATTRACT, VISUAL, NEVER
     }
 
-    enum class AllayTrailOptions {
+    enum class TrailOptions {
         BOTH, TRAIL, TWINKLE, NONE
     }
 

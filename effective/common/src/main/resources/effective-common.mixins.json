@@ -6,6 +6,9 @@
 	"client": [
 		"allay.AllayTrailMixin",
 		"allay.GoldenAllayMixin",
+		"biomeambience.BiomeAmbienceSoundMixin",
+		"biomeambience.SoundEngineAccessorMixin",
+		"biomeambience.SoundManagerAccessorMixin",
 		"chest.UnderwaterChestRandomOpeningMixin",
 		"chest.UnderwaterEnderChestRandomOpeningMixin",
 		"chest.UnderwaterOpenChestBubbleSpawnMixin",

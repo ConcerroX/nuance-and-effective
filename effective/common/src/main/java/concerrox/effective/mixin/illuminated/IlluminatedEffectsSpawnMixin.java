@@ -48,7 +48,9 @@ public abstract class IlluminatedEffectsSpawnMixin extends Level {
             value = "INVOKE", target = "Lnet/minecraft/world/level/biome/Biome;getAmbientParticle()Ljava/util/Optional;"
         )
     ), at = @At(
-        value = "INVOKE", target = "Ljava/util/Optional;ifPresent(Ljava/util/function/Consumer;)V", ordinal = 0,
+        value = "INVOKE",
+        target = "Ljava/util/Optional;ifPresent(Ljava/util/function/Consumer;)V",
+        ordinal = 0,
         shift = At.Shift.AFTER
     )
     )
