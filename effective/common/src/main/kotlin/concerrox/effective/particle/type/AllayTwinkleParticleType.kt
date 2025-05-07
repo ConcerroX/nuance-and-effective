@@ -9,4 +9,5 @@ import kotlin.math.abs
 @Environment(EnvType.CLIENT)
 class AllayTwinkleParticleType(alwaysShow: Boolean) : SimpleParticleType(alwaysShow) {
     var color: Color? = null
+    var scale = 1F
 }

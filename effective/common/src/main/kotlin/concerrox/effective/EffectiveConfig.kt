@@ -57,7 +57,7 @@ object EffectiveConfig {
                 eyesInTheDark = defineEnum("eyesInTheDark", EyesInTheDarkOptions.HALLOWEEN)
             }
             category("improvementEffects") {
-//                spectralArrowTrails = defineEnum("spectralArrowTrails", TrailOptions.BOTH)
+                spectralArrowTrails = defineEnum("spectralArrowTrails", TrailOptions.BOTH)
             }
             category("miscellaneousEffects") {
 
@@ -79,6 +79,12 @@ object EffectiveConfig {
 
         category("dynamicLights") {
 
+        }
+
+        category("technical") {
+            randomBlockDisplayTicksFrequencyMultiplier = defineInRange("randomBlockDisplayTicksFrequencyMultiplier", 1.0, 0.0, 25.0)
+            randomBlockDisplayTicksDistanceClose = defineInRange("randomBlockDisplayTicksDistanceClose", 16, 0, 160)
+            randomBlockDisplayTicksDistanceFar = defineInRange("randomBlockDisplayTicksDistanceFar", 32, 0, 320)
         }
     }
 
@@ -115,6 +121,8 @@ object EffectiveConfig {
     lateinit var willOWispDensity: ForgeConfigSpec.DoubleValue
     lateinit var eyesInTheDark: ForgeConfigSpec.EnumValue<EyesInTheDarkOptions>
 
+    lateinit var spectralArrowTrails: ForgeConfigSpec.EnumValue<TrailOptions>
+
     lateinit var cascadeSoundsVolume: ForgeConfigSpec.IntValue
     lateinit var cascadeSoundDistanceBlocks: ForgeConfigSpec.IntValue
 
@@ -122,6 +130,10 @@ object EffectiveConfig {
     lateinit var waterAmbienceVolume: ForgeConfigSpec.IntValue
     lateinit var foliageAmbienceVolume: ForgeConfigSpec.IntValue
     lateinit var animalAmbienceVolume: ForgeConfigSpec.IntValue
+
+    lateinit var randomBlockDisplayTicksFrequencyMultiplier: ForgeConfigSpec.DoubleValue
+    lateinit var randomBlockDisplayTicksDistanceClose: ForgeConfigSpec.IntValue
+    lateinit var randomBlockDisplayTicksDistanceFar: ForgeConfigSpec.IntValue
 
     enum class ChestsOpenOptions {
         ON_SOUL_SAND, RANDOMLY, NEVER

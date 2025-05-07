@@ -12,6 +12,7 @@ import net.minecraft.client.particle.ParticleProvider
 import net.minecraft.client.particle.ParticleRenderType
 import net.minecraft.client.particle.SpriteSet
 import net.minecraft.client.particle.TextureSheetParticle
+import net.minecraft.client.renderer.LightTexture
 import net.minecraft.core.particles.SimpleParticleType
 
 
@@ -29,7 +30,7 @@ class AllayTwinkleParticle(
 
     init {
         alpha = 0.9F
-        quadSize = 0.12F
+        quadSize = data.scale
         data.color?.let {
             rCol = it.redFloat
             gCol = it.greenFloat
@@ -42,6 +43,10 @@ class AllayTwinkleParticle(
 
     override fun getRenderType(): ParticleRenderType {
         return ParticleRenderType.PARTICLE_SHEET_LIT
+    }
+
+    override fun getLightColor(partialTick: Float): Int {
+        return LightTexture.FULL_BRIGHT
     }
 
     override fun tick() {
