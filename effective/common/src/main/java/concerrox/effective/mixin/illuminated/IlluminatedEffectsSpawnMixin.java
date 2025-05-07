@@ -2,14 +2,19 @@ package concerrox.effective.mixin.illuminated;
 
 import concerrox.effective.EffectiveConfig;
 import concerrox.effective.effect.IlluminatedEffectsSpawner;
+import concerrox.effective.registry.ModParticles;
+import concerrox.effective.util.RandomSourceUtils;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.WritableLevelData;
@@ -19,6 +24,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.function.Supplier;
 
 @Mixin(ClientLevel.class)
@@ -58,32 +65,59 @@ public abstract class IlluminatedEffectsSpawnMixin extends Level {
         int posX, int posY, int posZ, int range, RandomSource random, Block block, BlockPos.MutableBlockPos blockPos,
         CallbackInfo ci
     ) {
-        //        BlockPos.MutableBlockPos pos = blockPos.offset(Mth.floor(RandomSourceUtils.nextDoubleOrNegative(this.random) * 50), Mth.floor(RandomSourceUtils.nextDoubleOrNegative(this.random) * 10), Mth.floor(EffectiveUtils.getRandomFloatOrNegative(this.random) * 50)).mutableCopy();
+        BlockPos.MutableBlockPos pos = blockPos.offset(
+            Mth.floor(RandomSourceUtils.nextDoubleOrNegative(random) * 50),
+            Mth.floor(RandomSourceUtils.nextDoubleOrNegative(random) * 10),
+            Mth.floor(RandomSourceUtils.nextDoubleOrNegative(random) * 50)
+        ).mutable();
         //        BlockPos.MutableBlockPos pos2 = pos.mutable();
-        //        var biome = getBiome(pos);
+        var biome = getBiome(pos);
 
         if (EffectiveConfig.fireflyDensity.get() > 0) {
             IlluminatedEffectsSpawner.INSTANCE.trySpawnFireflies(this, blockPos, random);
         }
 
-        //        pos = blockPos.add(Mth.floor(EffectiveUtils.getRandomFloatOrNegative(this.random) * 50), Mth.floor(EffectiveUtils.getRandomFloatOrNegative(this.random) * 25), Mth.floor(EffectiveUtils.getRandomFloatOrNegative(this.random) * 50)).mutableCopy();
-        //
-        //        // WILL O' WISP
-        //        if (EffectiveConfig.willOWispDensity > 0) {
-        //            if (biome.matchesKey(BiomeKeys.SOUL_SAND_VALLEY)) {
-        //                if (random.nextFloat() * 100f <= 0.01f * EffectiveConfig.willOWispDensity) {
-        //                    if (this.getBlockState(pos).isIn(BlockTags.SOUL_FIRE_BASE_BLOCKS)) {
-        //                        this.addParticle(Effective.WILL_O_WISP, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //
-        //        // EYES IN THE DARK
-        //        if ((EffectiveConfig.eyesInTheDark == EffectiveConfig.EyesInTheDarkOptions.ALWAYS || (EffectiveConfig.eyesInTheDark == EffectiveConfig.EyesInTheDarkOptions.HALLOWEEN && LocalDate.now().getMonth() == Month.OCTOBER))
-        //            && random.nextFloat() <= 0.00002f) {
-        //            this.addParticle(Effective.EYES, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, 0.0D, 0.0D, 0.0D);
-        //        }
+        // WILL O' WISP
+        pos = blockPos.offset(
+            Mth.floor(RandomSourceUtils.nextDoubleOrNegative(random) * 50),
+            Mth.floor(RandomSourceUtils.nextDoubleOrNegative(random) * 25),
+            Mth.floor(RandomSourceUtils.nextDoubleOrNegative(random) * 50)
+        ).mutable();
+        if (EffectiveConfig.willOWispDensity.get() > 0) {
+            if (biome.is(Biomes.SOUL_SAND_VALLEY)) {
+                if (random.nextFloat() * 100f <= 0.01F * EffectiveConfig.willOWispDensity.get()) {
+                    if (getBlockState(pos).is(BlockTags.SOUL_FIRE_BASE_BLOCKS)) {
+                        addParticle(
+                            ModParticles.INSTANCE.getWILL_O_WISP(),
+                            pos.getX(),
+                            pos.getY(),
+                            pos.getZ(),
+                            0,
+                            0,
+                            0
+                        );
+                    }
+                }
+            }
+        }
+
+        // EYES IN THE DARK
+        if ((
+            EffectiveConfig.eyesInTheDark.get() == EffectiveConfig.EyesInTheDarkOptions.ALWAYS || (
+                EffectiveConfig.eyesInTheDark.get() == EffectiveConfig.EyesInTheDarkOptions.HALLOWEEN
+                    && LocalDate.now().getMonth() == Month.OCTOBER
+            )
+        ) && random.nextFloat() <= 0.00002F) {
+            addParticle(
+                ModParticles.INSTANCE.getEYES(),
+                pos.getX() + 0.5,
+                pos.getY() + 0.5,
+                pos.getZ() + 0.5,
+                0.0,
+                0.0,
+                0.0
+            );
+        }
     }
 
 }
