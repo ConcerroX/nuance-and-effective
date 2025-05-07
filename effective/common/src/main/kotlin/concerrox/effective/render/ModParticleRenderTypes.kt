@@ -15,26 +15,19 @@ object ModParticleRenderTypes {
 
     val ADDITIVE = object : ParticleRenderType {
 
-        override fun begin(bufferBuilder: BufferBuilder, textureManager: TextureManager) {
+        override fun begin(tesselator: Tesselator, textureManager: TextureManager): BufferBuilder? {
             RenderSystem.enableDepthTest()
             RenderSystem.enableBlend()
             RenderSystem.depthMask(false)
-            RenderSystem.setShader { ModShaders.PARTICLE }
-            RenderSystem.blendFuncSeparate(
-                GlStateManager.SourceFactor.SRC_ALPHA,
-                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
-                GlStateManager.SourceFactor.ONE,
-                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA
-            )
+//            RenderSystem.setShader { ModShaders.PARTICLE }
+//            RenderSystem.blendFuncSeparate(
+//                GlStateManager.SourceFactor.SRC_ALPHA,
+//                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
+//                GlStateManager.SourceFactor.ONE,
+//                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA
+//            )
             @Suppress("DEPRECATION") RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES)
-            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE)
-        }
-
-        override fun end(tesselator: Tesselator) {
-            tesselator.end()
-            RenderSystem.disableBlend()
-            RenderSystem.defaultBlendFunc()
-            RenderSystem.enableDepthTest()
+            return tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE)
         }
 
         override fun toString() = "ADDITIVE"

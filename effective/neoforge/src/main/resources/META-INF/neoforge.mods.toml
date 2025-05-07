@@ -1,5 +1,5 @@
 modLoader = "kotlinforforge"
-loaderVersion = "[4.10,)"
+loaderVersion = "[5.3,)"
 license = "Insert License Here"
 
 [[mods]]
@@ -10,23 +10,29 @@ description = '''
 ${description}
 '''
 
+[[mixins]]
+config = "effective-common.mixins.json"
+
+[[mixins]]
+config = "effective.mixins.json"
+
 [[dependencies.effective]]
-modId = "forge"
-mandatory = true
-versionRange = "[47,)"
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.effective]]
 modId = "minecraft"
-mandatory = true
-versionRange = "[1.20.1,)"
+type = "required"
+versionRange = "[1.21.1,)"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.effective]]
-modId = "satin"
-mandatory = false
-versionRange = "[0,)"
+modId = "velvet"
+type = "optional"
+versionRange = "[0.4,)"
 ordering = "NONE"
 side = "CLIENT"

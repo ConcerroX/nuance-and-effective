@@ -1,8 +1,8 @@
 @file:JvmName("PlatformImpl")
 
-package concerrox.effective.forge
+package concerrox.effective.neoforge
 
-import net.minecraftforge.fml.ModList
+import net.neoforged.fml.ModList
 
 private val isSatinInstalledOnForge by lazy {
     ModList.get().isLoaded("satin")

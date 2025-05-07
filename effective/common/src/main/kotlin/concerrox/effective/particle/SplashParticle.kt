@@ -9,11 +9,7 @@ import concerrox.effective.particle.model.SplashModel
 import concerrox.effective.particle.model.SplashRimModel
 import concerrox.effective.particle.type.SplashParticleType
 import concerrox.effective.registry.ModParticles
-import concerrox.effective.util.alphaFloat
-import concerrox.effective.util.blueFloat
-import concerrox.effective.util.greenFloat
 import concerrox.effective.util.nextDoubleOrNegative
-import concerrox.effective.util.redFloat
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.Camera
@@ -85,6 +81,7 @@ open class SplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) :
         val r = (waterColor shr 16 and 0xFF).toFloat() / 255.0f
         val g = (waterColor shr 8 and 0xFF).toFloat() / 255.0f
         val b = (waterColor and 0xFF).toFloat() / 255.0f
+        waterColor = Color(r, g, b, 0.9f).rgb
 
         val texture = Effective.id("textures/entity/splash/splash_" + Mth.clamp(frame, 0, MAX_FRAME) + ".png")
         val layer = RenderType.entityTranslucent(texture)
@@ -116,16 +113,14 @@ open class SplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) :
 
         val bufferSource = Minecraft.getInstance().renderBuffers().bufferSource()
         val modelConsumer = bufferSource.getBuffer(layer)
-        waveModel.renderToBuffer(modelMatrix, modelConsumer, light, OverlayTexture.NO_OVERLAY, r, g, b, 0.9F)
-        waveBottomModel.renderToBuffer(modelBottomMatrix, modelConsumer, light, OverlayTexture.NO_OVERLAY, r, g, b,
-            0.9F)
+        waveModel.renderToBuffer(modelMatrix, modelConsumer, light, OverlayTexture.NO_OVERLAY, waterColor)
+        waveBottomModel.renderToBuffer(modelBottomMatrix, modelConsumer, light, OverlayTexture.NO_OVERLAY, waterColor)
 
         val rimModelConsumer = bufferSource.getBuffer(rimLayer)
         val rimColor = getRimColor(blockPos)
-        waveRimModel.renderToBuffer(modelRimMatrix, rimModelConsumer, rimLight, OverlayTexture.NO_OVERLAY,
-            rimColor.redFloat, rimColor.greenFloat, rimColor.blueFloat, rimColor.alphaFloat)
+        waveRimModel.renderToBuffer(modelRimMatrix, rimModelConsumer, rimLight, OverlayTexture.NO_OVERLAY, rimColor.rgb)
         waveBottomRimModel.renderToBuffer(modelRimBottomMatrix, rimModelConsumer, rimLight, OverlayTexture.NO_OVERLAY,
-            rimColor.redFloat, rimColor.greenFloat, rimColor.blueFloat, rimColor.alphaFloat)
+            rimColor.rgb)
 
         bufferSource.endBatch()
     }

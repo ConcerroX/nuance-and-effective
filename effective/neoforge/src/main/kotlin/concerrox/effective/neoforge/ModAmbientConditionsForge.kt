@@ -1,4 +1,4 @@
-package concerrox.effective.forge
+package concerrox.effective.neoforge
 
 import concerrox.effective.registry.ModAmbientConditions
 import concerrox.effective.registry.ModAmbientConditions.AmbientCondition
@@ -7,7 +7,7 @@ import concerrox.effective.util.isInCave
 import concerrox.effective.util.isInOverworld
 import concerrox.effective.util.isNightTime
 import net.minecraft.tags.BiomeTags
-import net.minecraftforge.common.Tags.Biomes
+import net.neoforged.neoforge.common.Tags.Biomes
 
 typealias BiomeRegistry = net.minecraft.world.level.biome.Biomes
 
@@ -146,8 +146,8 @@ object ModAmbientConditionsForge {
         conditions.add(AmbientCondition(ModSounds.AMBIENT_WIND_COLD, AmbientCondition.Type.WIND) { level, pos, _ ->
             level.isInOverworld(pos) && !level.isInCave(pos) && (level.getBiome(pos)
                 .`is`(Biomes.IS_COLD_OVERWORLD) || level.getBiome(pos)
-                .`is`(Biomes.IS_SLOPE)) && !level.getBiome(pos)
-                .`is`(Biomes.IS_PEAK)
+                .`is`(Biomes.IS_MOUNTAIN_SLOPE)) && !level.getBiome(pos)
+                .`is`(Biomes.IS_MOUNTAIN_PEAK)
         })
 
         // deep dark ambience (classified as wind)
@@ -163,7 +163,7 @@ object ModAmbientConditionsForge {
         // mountain wind in peaks
         conditions.add(AmbientCondition(ModSounds.AMBIENT_WIND_MOUNTAINS, AmbientCondition.Type.WIND) { level, pos, _ ->
             level.isInOverworld(pos) && !level.isInCave(pos) && level.getBiome(pos)
-                .`is`(Biomes.IS_PEAK)
+                .`is`(Biomes.IS_MOUNTAIN_PEAK)
         })
 
         // soft wind in temperate, floral, savanna, jungle, swamp and mushroom field biomes

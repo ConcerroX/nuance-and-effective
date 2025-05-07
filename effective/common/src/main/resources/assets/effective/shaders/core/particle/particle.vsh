@@ -15,14 +15,14 @@ uniform mat4 ProjMat;
 uniform int FogShape;
 
 out vec4 vertexColor;
-out float vertexDistance;
+//out float vertexDistance;
 out vec2 texCoord0;
 
 void main() {
     gl_Position = ProjMat * ModelViewMat * vec4(Position, 1.0);
 
     vertexColor = Color * texelFetch(Sampler2, UV2 / 16, 0);
-    vertexDistance = fog_distance(ModelViewMat, IViewRotMat * Position, FogShape);
+//    vertexDistance = fog_distance(ModelViewMat, IViewRotMat * Position, FogShape);
 
     texCoord0 = UV0;
 }

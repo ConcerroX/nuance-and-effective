@@ -57,7 +57,7 @@ class EyesParticle(
         renderRotatedQuad(vertexConsumer, camera, quaternion, tickDelta)
     }
 
-    private fun renderRotatedQuad(
+    override fun renderRotatedQuad(
         vertexConsumer: VertexConsumer, camera: Camera, quaternion: Quaternionf, tickDelta: Float
     ) {
         val vec3d = camera.position
@@ -67,7 +67,7 @@ class EyesParticle(
         renderRotatedQuad(vertexConsumer, quaternion, g, h, i, tickDelta)
     }
 
-    private fun renderRotatedQuad(
+    override fun renderRotatedQuad(
         vertexConsumer: VertexConsumer, quaternion: Quaternionf, g: Float, h: Float, i: Float, tickDelta: Float
     ) {
         val vec3f = Vector3f(-1.0f, -1.0f, 0.0f)
@@ -88,14 +88,14 @@ class EyesParticle(
         val maxV = v1
         val lightColor = LightTexture.FULL_BRIGHT
 
-        vertexConsumer.vertex(vector3fs[0].x().toDouble(), vector3fs[0].y().toDouble(), vector3fs[0].z().toDouble())
-            .uv(maxU, maxV).color(rCol, gCol, bCol, alpha).uv2(lightColor).endVertex()
-        vertexConsumer.vertex(vector3fs[1].x().toDouble(), vector3fs[1].y().toDouble(), vector3fs[1].z().toDouble())
-            .uv(maxU, minV).color(rCol, gCol, bCol, alpha).uv2(lightColor).endVertex()
-        vertexConsumer.vertex(vector3fs[2].x().toDouble(), vector3fs[2].y().toDouble(), vector3fs[2].z().toDouble())
-            .uv(minU, minV).color(rCol, gCol, bCol, alpha).uv2(lightColor).endVertex()
-        vertexConsumer.vertex(vector3fs[3].x().toDouble(), vector3fs[3].y().toDouble(), vector3fs[3].z().toDouble())
-            .uv(minU, maxV).color(rCol, gCol, bCol, alpha).uv2(lightColor).endVertex()
+        vertexConsumer.addVertex(vector3fs[0].x(), vector3fs[0].y(), vector3fs[0].z())
+            .setUv(maxU, maxV).setColor(rCol, gCol, bCol, alpha).setLight(lightColor)
+        vertexConsumer.addVertex(vector3fs[1].x(), vector3fs[1].y(), vector3fs[1].z())
+            .setUv(maxU, minV).setColor(rCol, gCol, bCol, alpha).setLight(lightColor)
+        vertexConsumer.addVertex(vector3fs[2].x(), vector3fs[2].y(), vector3fs[2].z())
+            .setUv(minU, minV).setColor(rCol, gCol, bCol, alpha).setLight(lightColor)
+        vertexConsumer.addVertex(vector3fs[3].x(), vector3fs[3].y(), vector3fs[3].z())
+            .setUv(minU, maxV).setColor(rCol, gCol, bCol, alpha).setLight(lightColor)
     }
 
     override fun getRenderType(): ParticleRenderType {

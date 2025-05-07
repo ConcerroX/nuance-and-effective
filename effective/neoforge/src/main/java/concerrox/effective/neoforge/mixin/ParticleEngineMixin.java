@@ -1,15 +1,14 @@
-package concerrox.effective.forge.mixin;
+package concerrox.effective.neoforge.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import concerrox.effective.forge.EffectiveForge;
-import concerrox.effective.forge.shader.ParticleEngineClientExtensions;
+import concerrox.effective.neoforge.EffectiveNeoForge;
+import concerrox.effective.neoforge.shader.ParticleEngineClientExtensions;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,16 +30,16 @@ public class ParticleEngineMixin implements ParticleEngineClientExtensions {
 
     @Override
     public <O extends ParticleOptions, T extends ParticleType<O>> void effective$register(
-        @NotNull RegistryObject<T> type, @NotNull ParticleProvider<O> provider) {
-        providers.put(type.getId(), provider);
+        @NotNull ResourceLocation type, @NotNull ParticleProvider<O> provider) {
+        providers.put(type, provider);
     }
 
     @Override
     public <O extends ParticleOptions, T extends ParticleType<O>> void effective$register(
-        @NotNull RegistryObject<T> type, @NotNull ParticleEngine.SpriteParticleRegistration<O> registration) {
+        @NotNull ResourceLocation type, @NotNull ParticleEngine.SpriteParticleRegistration<O> registration) {
         ParticleEngine.MutableSpriteSet spriteSet = new ParticleEngine.MutableSpriteSet();
-        spriteSets.put(type.getId(), spriteSet);
-        providers.put(type.getId(), registration.create(spriteSet));
+        spriteSets.put(type, spriteSet);
+        providers.put(type, registration.create(spriteSet));
     }
 
     @ModifyExpressionValue(
@@ -53,12 +52,8 @@ public class ParticleEngineMixin implements ParticleEngineClientExtensions {
         ResourceLocation original,
         @Local(ordinal = 0, argsOnly = true) T options
     ) {
-        var clientRegistry = EffectiveForge.INSTANCE.getPARTICLE_REGISTRY_CLIENT$effective_forge().get();
-        if (clientRegistry != null) {
-            return original == null ? clientRegistry.getKey(options.getType()) : original;
-        } else {
-            return original;
-        }
+        var clientRegistry = EffectiveNeoForge.Companion.getPARTICLE_REGISTRY_CLIENT$effective_neoforge();
+        return original == null ? clientRegistry.getKey(options.getType()) : original;
     }
 
 }

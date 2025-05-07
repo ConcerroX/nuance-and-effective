@@ -22,21 +22,9 @@ class SplashBottomModel<T : Entity>(root: ModelPart) : EntityModel<T>() {
         vertices: VertexConsumer,
         light: Int,
         overlay: Int,
-        red: Float,
-        green: Float,
-        blue: Float,
-        alpha: Float
+        color: Int,
     ) {
-        splash.render(matrices, vertices, light, overlay, red, green, blue, alpha)
-    }
-
-    fun renderToBuffer(
-        matrices: PoseStack,
-        vertices: VertexConsumer,
-        light: Int,
-        overlay: Int,
-    ) {
-        splash.render(matrices, vertices, light, overlay)
+        splash.render(matrices, vertices, light, overlay, color)
     }
 
     override fun setupAnim(

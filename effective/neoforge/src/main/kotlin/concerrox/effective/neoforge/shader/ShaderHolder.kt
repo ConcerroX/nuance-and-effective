@@ -1,10 +1,8 @@
-package concerrox.effective.forge.shader
+package concerrox.effective.neoforge.shader
 
 import com.mojang.blaze3d.vertex.VertexFormat
-import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.resources.ResourceProvider
-import java.util.function.Supplier
 
 class ShaderHolder(
     val shaderLocation: ResourceLocation,

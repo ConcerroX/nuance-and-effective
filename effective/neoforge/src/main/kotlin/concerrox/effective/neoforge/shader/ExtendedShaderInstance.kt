@@ -1,4 +1,4 @@
-package concerrox.effective.forge.shader
+package concerrox.effective.neoforge.shader
 
 import com.google.gson.JsonElement
 import com.mojang.blaze3d.shaders.Uniform

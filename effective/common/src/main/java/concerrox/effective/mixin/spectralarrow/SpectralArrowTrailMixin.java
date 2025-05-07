@@ -77,7 +77,7 @@ public abstract class SpectralArrowTrailMixin<T extends AbstractArrow> extends E
                     particle.setColor(data);
                     particle.setScale(0.06F);
                     var random = spectralArrow.level().random;
-                    var p = spectralArrow.getLightProbePosition(Minecraft.getInstance().getFrameTime());
+                    var p = spectralArrow.getLightProbePosition(Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true));
                     entity.level().addParticle(
                         particle,
                         p.x + random.nextGaussian() / spreadDivider,

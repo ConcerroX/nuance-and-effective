@@ -4,7 +4,7 @@ val fabricLoaderVersion: String by rootProject
 val forgeConfigApiPortVersion: String by rootProject
 
 plugins {
-    id("com.github.johnrengelman.shadow")
+    id("com.gradleup.shadow")
 }
 
 architectury {
@@ -23,7 +23,7 @@ configurations {
 
 dependencies {
     modImplementation("net.fabricmc:fabric-loader:$fabricLoaderVersion")
-    modApi("fuzs.forgeconfigscreens:forgeconfigscreens-fabric:$forgeConfigApiPortVersion")
+    modApi("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:$forgeConfigApiPortVersion")
     common(project(":effective:common", "namedElements")) { isTransitive = false }
     shadowCommon(project(":effective:common", "transformProductionFabric")) { isTransitive = false }
 }

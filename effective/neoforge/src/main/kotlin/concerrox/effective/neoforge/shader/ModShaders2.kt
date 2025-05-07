@@ -1,4 +1,4 @@
-package concerrox.effective.forge.shader
+package concerrox.effective.neoforge.shader
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import concerrox.effective.Effective.id

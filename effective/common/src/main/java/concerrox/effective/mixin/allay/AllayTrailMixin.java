@@ -80,7 +80,7 @@ public abstract class AllayTrailMixin<T extends LivingEntity> extends EntityRend
                     particle.setColor(data);
                     particle.setScale(0.12F);
                     var random = allayEntity.getRandom();
-                    var p = allayEntity.getLightProbePosition(Minecraft.getInstance().getFrameTime());
+                    var p = allayEntity.getLightProbePosition(Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true));
                     entity.level().addParticle(
                         particle,
                         p.x + random.nextGaussian() / spreadDivider,

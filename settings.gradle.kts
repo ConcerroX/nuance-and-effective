@@ -10,6 +10,6 @@ pluginManagement {
     }
 }
 
-include(":effective", ":effective:common", ":effective:fabric", ":effective:forge")
+include(":effective", ":effective:common", ":effective:fabric", ":effective:neoforge")
 
 rootProject.name = "nuance-and-effective"

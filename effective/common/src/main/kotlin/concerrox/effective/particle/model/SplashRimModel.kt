@@ -22,12 +22,9 @@ class SplashRimModel<T : Entity?>(root: ModelPart) : EntityModel<T>() {
         vertices: VertexConsumer,
         light: Int,
         overlay: Int,
-        red: Float,
-        green: Float,
-        blue: Float,
-        alpha: Float
+        color: Int
     ) {
-        splash.render(matrices, vertices, light, overlay, red, green, blue, alpha)
+        splash.render(matrices, vertices, light, overlay, color)
     }
 
     override fun setupAnim(

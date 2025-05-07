@@ -67,7 +67,7 @@ class ChorusPetalParticle(
         }
     }
 
-    private fun renderRotatedQuad(
+    override fun renderRotatedQuad(
         vertexConsumer: VertexConsumer, camera: Camera, quaternion: Quaternionf, tickDelta: Float
     ) {
         val vec3d = camera.position
@@ -75,37 +75,6 @@ class ChorusPetalParticle(
         val h = (Mth.lerp(tickDelta.toDouble(), yo, y) - vec3d.y).toFloat() + groundOffset
         val i = (Mth.lerp(tickDelta.toDouble(), zo, z) - vec3d.z).toFloat()
         renderRotatedQuad(vertexConsumer, quaternion, g, h, i, tickDelta)
-    }
-
-    private fun renderRotatedQuad(
-        vertexConsumer: VertexConsumer, quaternion: Quaternionf, g: Float, h: Float, i: Float, tickDelta: Float
-    ) {
-        val vec3f = Vector3f(-1.0f, -1.0f, 0.0f)
-        vec3f.rotate(quaternion)
-        val vector3fs = arrayOf(Vector3f(-1.0f, -1.0f, 0.0f), Vector3f(-1.0f, 1.0f, 0.0f), Vector3f(1.0f, 1.0f, 0.0f),
-            Vector3f(1.0f, -1.0f, 0.0f))
-
-        for (k in 0..3) {
-            val vector3f = vector3fs[k]
-            vector3f.rotate(Quaternionf().rotateXYZ(Math.toRadians(90.0).toFloat(), 0f, 0f))
-            vector3f.mul(getQuadSize(tickDelta))
-            vector3f.add(g, h, i)
-        }
-
-        val minU = u0
-        val maxU = u1
-        val minV = v0
-        val maxV = v1
-        val lightColor = getLightColor(tickDelta)
-
-        vertexConsumer.vertex(vector3fs[0].x().toDouble(), vector3fs[0].y().toDouble(), vector3fs[0].z().toDouble())
-            .uv(maxU, maxV).color(rCol, gCol, bCol, alpha).uv2(lightColor).endVertex()
-        vertexConsumer.vertex(vector3fs[1].x().toDouble(), vector3fs[1].y().toDouble(), vector3fs[1].z().toDouble())
-            .uv(maxU, minV).color(rCol, gCol, bCol, alpha).uv2(lightColor).endVertex()
-        vertexConsumer.vertex(vector3fs[2].x().toDouble(), vector3fs[2].y().toDouble(), vector3fs[2].z().toDouble())
-            .uv(minU, minV).color(rCol, gCol, bCol, alpha).uv2(lightColor).endVertex()
-        vertexConsumer.vertex(vector3fs[3].x().toDouble(), vector3fs[3].y().toDouble(), vector3fs[3].z().toDouble())
-            .uv(minU, maxV).color(rCol, gCol, bCol, alpha).uv2(lightColor).endVertex()
     }
 
     override fun getLightColor(partialTick: Float): Int {

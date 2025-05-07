@@ -2,10 +2,10 @@ package concerrox.effective.effect
 
 import concerrox.effective.Effective
 import concerrox.effective.EffectiveConfig
-import ladysnake.satin.api.managed.ManagedCoreShader
-import ladysnake.satin.api.managed.ManagedShaderEffect
-import ladysnake.satin.api.managed.ShaderEffectManager
-import ladysnake.satin.api.managed.uniform.Uniform1f
+import dev.cammiescorner.velvet.api.managed.ManagedCoreShader
+import dev.cammiescorner.velvet.api.managed.ManagedShaderEffect
+import dev.cammiescorner.velvet.api.managed.ShaderEffectManager
+import dev.cammiescorner.velvet.api.managed.uniform.Uniform1f
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.sounds.SoundEvents
@@ -34,7 +34,7 @@ object GlowSquidHypnosisManager {
     private val hypnosisRainbow: Uniform1f = HYPNOSIS_SHADER.findUniform1f("Rainbow")
 
     internal fun getRainbowShaderRenderType(base: RenderType): RenderType {
-        return RAINBOW_SHADER.getRenderLayer(base)
+        return RAINBOW_SHADER.getRenderType(base)
     }
 
     fun onShaderEffectRendered(tickDelta: Float) {
