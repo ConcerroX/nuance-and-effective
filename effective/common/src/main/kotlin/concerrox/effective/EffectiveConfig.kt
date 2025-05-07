@@ -53,7 +53,7 @@ object EffectiveConfig {
                 fireflyDensity = defineInRange("fireflyDensity", 1.0, 0.0, 10.0)
                 fireflySpawnSettings = defineList("fireflySpawnSettings", DEFAULT_FIREFLY_SPAWN_SETTINGS) { it is String }
                 chorusPetalDensity = defineInRange("chorusPetalDensity", 1.0, 0.0, 10.0)
-                willOWispDensity = defineInRange("willOWispDensity", 1.0, 0.0, 10.0)
+                willOWispDensity = defineInRange("willOWispDensity", 1.0, 0.0, 1000.0)
                 eyesInTheDark = defineEnum("eyesInTheDark", EyesInTheDarkOptions.HALLOWEEN)
             }
             category("improvementEffects") {

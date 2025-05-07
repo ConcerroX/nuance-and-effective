@@ -1,5 +1,6 @@
 package concerrox.effective.render
 
+import com.mojang.blaze3d.platform.GlStateManager
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.BufferBuilder
 import com.mojang.blaze3d.vertex.DefaultVertexFormat
@@ -13,11 +14,18 @@ import net.minecraft.client.renderer.texture.TextureManager
 object ModParticleRenderTypes {
 
     val ADDITIVE = object : ParticleRenderType {
+
         override fun begin(bufferBuilder: BufferBuilder, textureManager: TextureManager) {
             RenderSystem.enableDepthTest()
             RenderSystem.enableBlend()
-            RenderSystem.depthMask(true)
+            RenderSystem.depthMask(false)
             RenderSystem.setShader { ModShaders.PARTICLE }
+            RenderSystem.blendFuncSeparate(
+                GlStateManager.SourceFactor.SRC_ALPHA,
+                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
+                GlStateManager.SourceFactor.ONE,
+                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA
+            )
             @Suppress("DEPRECATION") RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES)
             bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE)
         }
@@ -30,6 +38,7 @@ object ModParticleRenderTypes {
         }
 
         override fun toString() = "ADDITIVE"
+
     }
 
     /**

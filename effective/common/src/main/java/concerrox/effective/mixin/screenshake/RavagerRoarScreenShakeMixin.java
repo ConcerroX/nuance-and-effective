@@ -23,7 +23,7 @@ public class RavagerRoarScreenShakeMixin extends Monster {
     @Inject(method = "roar", at = @At("HEAD"))
     public void roar(CallbackInfo ci) {
         if (EffectiveConfig.ravagerScreenShake.get()) {
-            var roarScreenShake = new PositionedScreenShake(10, position(), 20f, 25f, Easing.CIRC_IN_OUT).setIntensity(0.0f,
+            var roarScreenShake = new PositionedScreenShake(10, position(), 20f, 25f).setIntensity(0.0f,
                 EffectiveConfig.screenShakeIntensity.get().floatValue(),
                 0.0f
             );

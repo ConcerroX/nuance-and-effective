@@ -43,7 +43,7 @@ class GlowingSplashParticle(level: ClientLevel, x: Double, y: Double, z: Double)
             velocityZ: Double
         ): Particle {
             val instance = GlowingSplashParticle(level, x, y, z)
-            (type as SplashParticleType).initialData?.let {
+            (type as SplashParticleType).let {
                 val width = it.width * 2
                 instance.widthMultiplier = width
                 instance.heightMultiplier = it.velocityY.toFloat() * width

@@ -39,8 +39,7 @@ public class WardenRoarScreenShakeMixin extends Monster {
                         70,
                         position(),
                         20f,
-                        25f,
-                        Easing.CIRC_IN_OUT
+                        25f
                     ).setIntensity(
                         0.0f,
                         EffectiveConfig.screenShakeIntensity.get().floatValue(),

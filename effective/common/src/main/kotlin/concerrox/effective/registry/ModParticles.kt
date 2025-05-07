@@ -1,11 +1,13 @@
 package concerrox.effective.registry
 
 import concerrox.effective.Effective
+import concerrox.effective.particle.AllayTwinkleParticle
 import concerrox.effective.particle.BubbleParticle
 import concerrox.effective.particle.CascadeCloudParticle
 import concerrox.effective.particle.ChorusPetalParticle
 import concerrox.effective.particle.DropletParticle
 import concerrox.effective.particle.EndBubbleParticle
+import concerrox.effective.particle.FireflyParticle
 import concerrox.effective.particle.GlowingCascadeCloudParticle
 import concerrox.effective.particle.GlowingDropletParticle
 import concerrox.effective.particle.GlowingRippleParticle
@@ -13,14 +15,18 @@ import concerrox.effective.particle.GlowingSplashParticle
 import concerrox.effective.particle.MistParticle
 import concerrox.effective.particle.RippleParticle
 import concerrox.effective.particle.SplashParticle
+import concerrox.effective.particle.WillOWispParticle
+import concerrox.effective.particle.WispParticle
+import concerrox.effective.particle.type.AllayTwinkleParticleType
 import concerrox.effective.particle.type.SplashParticleType
+import concerrox.effective.particle.type.WispParticleType
 import net.minecraft.client.particle.ParticleProvider
 import net.minecraft.client.particle.SpriteSet
 import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.core.particles.ParticleType
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.resources.ResourceLocation
-import concerrox.effective.particle.FireflyParticle
+import java.awt.Color
 
 object ModParticles {
 
@@ -40,6 +46,11 @@ object ModParticles {
     val END_BUBBLE by register("end_bubble", EndBubbleParticle::Provider) { SimpleParticleType(true) }
     val FIREFLY by register("firefly", FireflyParticle::Provider) { SimpleParticleType(true) }
     val CHORUS_PETAL by register("chorus_petal", ChorusPetalParticle::Provider) { SimpleParticleType(true) }
+    val WILL_O_WISP by register("will_o_wisp", { spriteSet ->
+        WillOWispParticle.Provider(spriteSet, Color(0.1F, 0.75F, 1F), Color(0F, 0.1F, 1F))
+    }) { SimpleParticleType(true) }
+    val WISP by register("wisp", WispParticle::Provider) { WispParticleType(true) }
+    val ALLAY_TWINKLE by register("allay_twinkle", AllayTwinkleParticle::Provider) { AllayTwinkleParticleType(true) }
 
     private fun <I : ParticleType<T>, T : ParticleOptions> register(
         id: String, provider: (SpriteSet) -> ParticleProvider<T>, type: () -> I
@@ -51,7 +62,10 @@ object ModParticles {
     }
 
     data class ParticleEntry<I : ParticleType<T>, T : ParticleOptions>(
-        val id: ResourceLocation, val type: Lazy<I>, val provider: (SpriteSet) -> ParticleProvider<T>, var extra: Any? = null
+        val id: ResourceLocation,
+        val type: Lazy<I>,
+        val provider: (SpriteSet) -> ParticleProvider<T>,
+        var extra: Any? = null
     )
 
 }

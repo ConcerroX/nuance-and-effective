@@ -26,8 +26,7 @@ public abstract class EnderDragonRoarScreenShakeMixin extends AbstractDragonSitt
                 60,
                 dragon.position(),
                 20f,
-                25f,
-                Easing.CIRC_IN_OUT
+                25f
             ).setIntensity(
                 0.0f,
                 EffectiveConfig.screenShakeIntensity.get().floatValue(),

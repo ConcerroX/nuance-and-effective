@@ -33,8 +33,7 @@ public class SonicBoomScreenShakeMixin {
                         20,
                         owner.position(),
                         20f,
-                        25f,
-                        Easing.CIRC_IN_OUT
+                        25f
                     ).setIntensity(EffectiveConfig.screenShakeIntensity.get().floatValue(), 0.0f, 0.0f);
                     ScreenShakeManager.INSTANCE.addScreenshake(boomScreenShake);
                 });

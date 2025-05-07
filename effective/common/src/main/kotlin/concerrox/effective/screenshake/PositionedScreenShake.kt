@@ -6,7 +6,7 @@ import net.minecraft.world.phys.Vec3
 import kotlin.math.max
 
 class PositionedScreenShake //TODO: make falloff affect duration; the further away a player is the less the screenshake lasts
-    (duration: Int, val position: Vec3, private val falloffDistance: Float, private val maxDistance: Float, val falloffEasing: Easing) :
+    (duration: Int, val position: Vec3, private val falloffDistance: Float, private val maxDistance: Float) :
     ScreenShake(duration) {
 
     override fun updateIntensity(camera: Camera, random: RandomSource): Float {

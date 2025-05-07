@@ -1,10 +1,9 @@
 package concerrox.effective.effect
 
 import concerrox.effective.EffectiveConfig
-import concerrox.effective.util.nextDoubleOrNegative
-import concerrox.effective.particle.type.SplashParticleType.SplashParticleInitialData
 import concerrox.effective.registry.ModParticles
 import concerrox.effective.util.WaterUtils
+import concerrox.effective.util.nextDoubleOrNegative
 import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -36,8 +35,7 @@ object SplashSpawner {
                     entity.level().playLocalSound(entity.x, splashY.toDouble(), entity.z,
                         if (topMostEntity is Player) SoundEvents.PLAYER_SPLASH else SoundEvents.GENERIC_SPLASH,
                         SoundSource.AMBIENT, splashIntensity * 10F, 0.8F, true)
-                    val data = SplashParticleInitialData(topMostEntity.bbWidth, impactVelocity.y)
-                    spawnSplash(entity.level(), entity.x, splashY.toDouble(), entity.z, data)
+                    spawnSplash(entity.level(), entity.x, splashY.toDouble(), entity.z, topMostEntity.bbWidth, impactVelocity.y)
                     break
                 }
             }
@@ -75,9 +73,12 @@ object SplashSpawner {
     /**
      * Chooses between spawning a normal splash or glow splash depending on biome
      */
-    private fun spawnSplash(world: Level, x: Double, y: Double, z: Double, data: SplashParticleInitialData?) {
+    private fun spawnSplash(world: Level, x: Double, y: Double, z: Double, width: Float, velocityY: Double) {
         val splash = if (WaterUtils.isGlowingWater(world,
                 BlockPos(x.toInt(), y.toInt(), z.toInt()))) ModParticles.GLOWING_SPLASH else ModParticles.SPLASH
-        world.addParticle(splash.apply { initialData = data }, x, y, z, 0.0, 0.0, 0.0)
+        world.addParticle(splash.apply {
+            this.width = width
+            this.velocityY = velocityY
+        }, x, y, z, 0.0, 0.0, 0.0)
     }
 }
