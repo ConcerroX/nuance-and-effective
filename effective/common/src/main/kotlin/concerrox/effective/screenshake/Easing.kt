@@ -1,5 +1,6 @@
 package concerrox.effective.screenshake
 
+import kotlin.math.sin
 import kotlin.math.sqrt
 
 /**
@@ -30,6 +31,14 @@ abstract class Easing {
                 return max * sqrt((1 - ((t / time - 1).also { t = it }) * t)) + min
             }
         }
+
+        @JvmField
+        val SINE_OUT: Easing = object : Easing() {
+            override fun ease(value: Float, min: Float, max: Float, time: Float): Float {
+                return max * sin(value / time * (Math.PI / 2)).toFloat() + min
+            }
+        }
+
 
     }
 }

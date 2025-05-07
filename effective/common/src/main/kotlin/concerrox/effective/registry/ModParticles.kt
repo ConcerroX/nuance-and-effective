@@ -15,6 +15,7 @@ import concerrox.effective.particle.GlowingRippleParticle
 import concerrox.effective.particle.GlowingSplashParticle
 import concerrox.effective.particle.MistParticle
 import concerrox.effective.particle.RippleParticle
+import concerrox.effective.particle.SculkDustParticle
 import concerrox.effective.particle.SplashParticle
 import concerrox.effective.particle.WillOWispParticle
 import concerrox.effective.particle.WispParticle
@@ -53,6 +54,7 @@ object ModParticles {
     val WISP by register("wisp", WispParticle::Provider) { WispParticleType(true) }
     val ALLAY_TWINKLE by register("allay_twinkle", AllayTwinkleParticle::Provider) { AllayTwinkleParticleType(true) }
     val EYES by register("eyes", EyesParticle::Provider) { SimpleParticleType(true) }
+    val SCULK_DUST by register("sculk_dust", SculkDustParticle::Provider) { SimpleParticleType(true) }
 
     private fun <I : ParticleType<T>, T : ParticleOptions> register(
         id: String, provider: (SpriteSet) -> ParticleProvider<T>, type: () -> I

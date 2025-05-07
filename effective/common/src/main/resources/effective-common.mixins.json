@@ -31,9 +31,11 @@
 		"water.CascadeCloudSpawnMixin",
 		"water.CascadeGenerationMixin",
 		"water.EntitySplashMixin",
-		"water.SplashesAndRippleSpawnMixin"
+		"water.SplashesAndRippleSpawnMixin",
+		"sculk.SculkDustSpawnMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
-	}
+	},
+	"mixins": []
 }

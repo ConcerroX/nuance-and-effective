@@ -60,7 +60,7 @@ object EffectiveConfig {
                 spectralArrowTrails = defineEnum("spectralArrowTrails", TrailOptions.BOTH)
             }
             category("miscellaneousEffects") {
-
+                sculkDustDensity = defineInRange("sculkDustDensity", 100, 0, 100)
             }
         }
 
@@ -122,6 +122,8 @@ object EffectiveConfig {
     lateinit var eyesInTheDark: ForgeConfigSpec.EnumValue<EyesInTheDarkOptions>
 
     lateinit var spectralArrowTrails: ForgeConfigSpec.EnumValue<TrailOptions>
+
+    lateinit var sculkDustDensity: ForgeConfigSpec.IntValue
 
     lateinit var cascadeSoundsVolume: ForgeConfigSpec.IntValue
     lateinit var cascadeSoundDistanceBlocks: ForgeConfigSpec.IntValue
