@@ -20,6 +20,7 @@ object EffectiveConfig {
         category("visuals") {
             category("waterEffects") {
                 isSplashesEnabled = define("isSplashesEnabled", true)
+                isLavaSplashesEnabled = define("isLavaSplashesEnabled", false)
 
                 splashThreshold = defineInRange("splashThreshold", 0.3, 0.0, 5.0)
                 dropletSplashingDensity = defineInRange("dropletSplashingDensity", 50, 0, 100)
@@ -89,6 +90,7 @@ object EffectiveConfig {
     }
 
     lateinit var isSplashesEnabled: ForgeConfigSpec.BooleanValue
+    lateinit var isLavaSplashesEnabled: ForgeConfigSpec.BooleanValue
     lateinit var splashThreshold: ForgeConfigSpec.DoubleValue
 
     lateinit var dropletSplashingDensity: ForgeConfigSpec.IntValue

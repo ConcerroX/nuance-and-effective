@@ -30,6 +30,15 @@ class SplashModel<T : Entity>(root: ModelPart) : EntityModel<T>() {
         splash.render(matrices, vertices, light, overlay, red, green, blue, alpha)
     }
 
+    fun renderToBuffer(
+        matrices: PoseStack,
+        vertices: VertexConsumer,
+        light: Int,
+        overlay: Int,
+    ) {
+        splash.render(matrices, vertices, light, overlay)
+    }
+
     override fun setupAnim(
         entity: T, limbAngle: Float, limbDistance: Float, animationProgress: Float, headYaw: Float, headPitch: Float
     ) {

@@ -83,23 +83,23 @@ public abstract class IlluminatedEffectsSpawnMixin extends Level {
             Mth.floor(RandomSourceUtils.nextDoubleOrNegative(random) * 25),
             Mth.floor(RandomSourceUtils.nextDoubleOrNegative(random) * 50)
         ).mutable();
-        if (EffectiveConfig.willOWispDensity.get() > 0) {
-            if (biome.is(Biomes.SOUL_SAND_VALLEY)) {
-                if (random.nextFloat() * 100f <= 0.01F * EffectiveConfig.willOWispDensity.get()) {
-                    if (getBlockState(pos).is(BlockTags.SOUL_FIRE_BASE_BLOCKS)) {
-                        addParticle(
-                            ModParticles.INSTANCE.getWILL_O_WISP(),
-                            pos.getX(),
-                            pos.getY(),
-                            pos.getZ(),
-                            0,
-                            0,
-                            0
-                        );
-                    }
-                }
-            }
-        }
+//        if (EffectiveConfig.willOWispDensity.get() > 0) {
+//            if (biome.is(Biomes.SOUL_SAND_VALLEY)) {
+//                if (random.nextFloat() * 100f <= 0.01F * EffectiveConfig.willOWispDensity.get()) {
+//                    if (getBlockState(pos).is(BlockTags.SOUL_FIRE_BASE_BLOCKS)) {
+//                        addParticle(
+//                            ModParticles.INSTANCE.getWILL_O_WISP(),
+//                            pos.getX(),
+//                            pos.getY(),
+//                            pos.getZ(),
+//                            0,
+//                            0,
+//                            0
+//                        );
+//                    }
+//                }
+//            }
+//        }
 
         // EYES IN THE DARK
         if ((

@@ -4,21 +4,14 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import concerrox.effective.Effective
 import concerrox.effective.particle.model.SplashBottomModel
-import concerrox.effective.particle.model.SplashBottomRimModel
 import concerrox.effective.particle.model.SplashModel
-import concerrox.effective.particle.model.SplashRimModel
 import concerrox.effective.particle.type.SplashParticleType
-import concerrox.effective.registry.ModParticles
-import concerrox.effective.util.alphaFloat
-import concerrox.effective.util.blueFloat
-import concerrox.effective.util.greenFloat
+import concerrox.effective.util.isBlock
 import concerrox.effective.util.nextDoubleOrNegative
-import concerrox.effective.util.redFloat
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.Camera
 import net.minecraft.client.Minecraft
-import net.minecraft.client.model.Model
 import net.minecraft.client.model.geom.EntityModelSet
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.particle.Particle
@@ -29,14 +22,18 @@ import net.minecraft.client.renderer.BiomeColors
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.core.BlockPos
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.phys.Vec3
 import org.joml.Vector3f
-import java.awt.Color
+import kotlin.math.max
 import kotlin.math.roundToInt
 
-open class SplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) : Particle(level, x, y, z) {
+
+class LavaSplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) : Particle(level, x, y, z) {
 
     private val models: EntityModelSet = Minecraft.getInstance().entityModels
     var widthMultiplier: Float
@@ -47,9 +44,6 @@ open class SplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) :
     private var waterColor: Int = -1
     private var waveModel = SplashModel<Entity>(models.bakeLayer(SplashModel.MODEL_LAYER))
     private var waveBottomModel = SplashBottomModel<Entity>(models.bakeLayer(SplashBottomModel.MODEL_LAYER))
-    private var waveRimModel: Model = SplashRimModel<Entity>(models.bakeLayer(SplashRimModel.MODEL_LAYER))
-    private var waveBottomRimModel: Model = SplashBottomRimModel<Entity>(
-        models.bakeLayer(SplashBottomRimModel.MODEL_LAYER))
     private var blockPos: BlockPos
 
     init {
@@ -82,15 +76,9 @@ open class SplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) :
         if (waterColor == -1) {
             waterColor = BiomeColors.getAverageWaterColor(level, BlockPos.containing(this.x, this.y, this.z))
         }
-        val r = (waterColor shr 16 and 0xFF).toFloat() / 255.0f
-        val g = (waterColor shr 8 and 0xFF).toFloat() / 255.0f
-        val b = (waterColor and 0xFF).toFloat() / 255.0f
 
-        val texture = Effective.id("textures/entity/splash/splash_" + Mth.clamp(frame, 0, MAX_FRAME) + ".png")
+        val texture = Effective.id("textures/entity/splash/lava_splash_" + Mth.clamp(frame, 0, MAX_FRAME) + ".png")
         val layer = RenderType.entityTranslucent(texture)
-        val rimTexture = Effective.id("textures/entity/splash/splash_rim_" + Mth.clamp(frame, 0, MAX_FRAME) + ".png")
-        val rimLayer = RenderType.entityTranslucent(rimTexture)
-
         // splash matrices
         val modelMatrix = getMatrixStackFromCamera(camera, tickDelta)
         modelMatrix.scale(widthMultiplier * multiplier.x(), -heightMultiplier * multiplier.y(),
@@ -101,32 +89,11 @@ open class SplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) :
             widthMultiplier * multiplier.z())
         modelBottomMatrix.translate(0.0, 0.001, 0.0)
 
-        // splash bottom matrices
-        val modelRimMatrix = getMatrixStackFromCamera(camera, tickDelta)
-        modelRimMatrix.scale(widthMultiplier * multiplier.x(), -heightMultiplier * multiplier.y(),
-            widthMultiplier * multiplier.z())
-        modelRimMatrix.translate(0.0, -1.0, 0.0)
-        val modelRimBottomMatrix = getMatrixStackFromCamera(camera, tickDelta)
-        modelRimBottomMatrix.scale(widthMultiplier * multiplier.x(), heightMultiplier * multiplier.y(),
-            widthMultiplier * multiplier.z())
-        modelRimBottomMatrix.translate(0.0, 0.001, 0.0)
-
         val light = getLightColor(tickDelta)
-        val rimLight = getRimBrightness(tickDelta)
-
         val bufferSource = Minecraft.getInstance().renderBuffers().bufferSource()
         val modelConsumer = bufferSource.getBuffer(layer)
-        waveModel.renderToBuffer(modelMatrix, modelConsumer, light, OverlayTexture.NO_OVERLAY, r, g, b, 0.9F)
-        waveBottomModel.renderToBuffer(modelBottomMatrix, modelConsumer, light, OverlayTexture.NO_OVERLAY, r, g, b,
-            0.9F)
-
-        val rimModelConsumer = bufferSource.getBuffer(rimLayer)
-        val rimColor = getRimColor(blockPos)
-        waveRimModel.renderToBuffer(modelRimMatrix, rimModelConsumer, rimLight, OverlayTexture.NO_OVERLAY,
-            rimColor.redFloat, rimColor.greenFloat, rimColor.blueFloat, rimColor.alphaFloat)
-        waveBottomRimModel.renderToBuffer(modelRimBottomMatrix, rimModelConsumer, rimLight, OverlayTexture.NO_OVERLAY,
-            rimColor.redFloat, rimColor.greenFloat, rimColor.blueFloat, rimColor.alphaFloat)
-
+        waveModel.renderToBuffer(modelMatrix, modelConsumer, light, OverlayTexture.NO_OVERLAY)
+        waveBottomModel.renderToBuffer(modelBottomMatrix, modelConsumer, light, OverlayTexture.NO_OVERLAY)
         bufferSource.endBatch()
     }
 
@@ -142,7 +109,23 @@ open class SplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) :
 
     override fun tick() {
         if (widthMultiplier == 0f) {
-            remove()
+            val closeEntities = level.getEntities(null, boundingBox.inflate(5.0)).filter { entity ->
+                val v = entity.deltaMovement
+                level.isBlock(entity.blockPosition().offset(Mth.floor(v.x), Mth.floor(v.y), Mth.floor(v.z)),
+                    Blocks.LAVA)
+            }
+            closeEntities.sortedWith { o1, o2 ->
+                (o1.position().distanceToSqr(Vec3(x, y, z)) - o2.position().distanceToSqr(Vec3(x, y, z))).toInt()
+            }
+            if (closeEntities.isNotEmpty()) {
+                widthMultiplier = closeEntities[0].bbWidth * 2f
+                heightMultiplier = max(-closeEntities[0].deltaMovement.y * widthMultiplier, 0.0).toFloat()
+                wave1End = 10 + Math.round(widthMultiplier * 1.2f)
+                wave2Start = 6 + Math.round(widthMultiplier * 0.7f)
+                wave2End = 20 + Math.round(widthMultiplier * 2.4f)
+            } else {
+                remove()
+            }
         }
 
         xo = x
@@ -158,8 +141,8 @@ open class SplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) :
         if (age == 1) {
             var i = 0
             while (i < widthMultiplier * 10.0) {
-                level.addParticle(getDropletParticle(), x + (random.nextDoubleOrNegative() * widthMultiplier / 5.0), y,
-                    z + (random.nextDoubleOrNegative() * widthMultiplier / 5.0),
+                level.addParticle(ParticleTypes.LAVA, x + (random.nextDoubleOrNegative() * widthMultiplier / 10.0), y,
+                    z + (random.nextDoubleOrNegative() * widthMultiplier / 10.0),
                     random.nextDoubleOrNegative() / 10.0 * widthMultiplier / 2.5,
                     random.nextDouble() / 10.0 + heightMultiplier / 2.8,
                     random.nextDoubleOrNegative() / 10.0 * widthMultiplier / 2.5)
@@ -168,27 +151,15 @@ open class SplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) :
         } else if (age == wave2Start) {
             var i = 0
             while (i < widthMultiplier * 5.0) {
-                level.addParticle(getDropletParticle(),
-                    x + (random.nextDoubleOrNegative() * widthMultiplier / 5.0 * 0.5), y,
-                    z + (random.nextDoubleOrNegative() * widthMultiplier / 5.0 * 0.5),
+                level.addParticle(ParticleTypes.LAVA,
+                    x + (random.nextDoubleOrNegative() * widthMultiplier / 10.0 * 0.5), y,
+                    z + (random.nextDoubleOrNegative() * widthMultiplier / 10.0 * 0.5),
                     random.nextDoubleOrNegative() / 10.0 * widthMultiplier / 5.0,
                     random.nextDouble() / 10.0 + heightMultiplier / 2.2,
                     random.nextDoubleOrNegative() / 10.0 * widthMultiplier / 5.0)
                 i++
             }
         }
-    }
-
-    open fun getRimBrightness(tickDelta: Float): Int {
-        return getLightColor(tickDelta)
-    }
-
-    open fun getRimColor(pos: BlockPos): Color {
-        return Color(0xFFFFFFFF.toInt())
-    }
-
-    open fun getDropletParticle(): SimpleParticleType {
-        return ModParticles.DROPLET
     }
 
     @Environment(EnvType.CLIENT)
@@ -203,7 +174,7 @@ open class SplashParticle(level: ClientLevel, x: Double, y: Double, z: Double) :
             velocityY: Double,
             velocityZ: Double
         ): Particle {
-            val instance = SplashParticle(level, x, y, z)
+            val instance = LavaSplashParticle(level, x, y, z)
             (type as SplashParticleType).let {
                 val width = it.width * 2
                 instance.widthMultiplier = width
