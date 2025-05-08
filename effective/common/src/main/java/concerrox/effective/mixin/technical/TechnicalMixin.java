@@ -41,17 +41,17 @@ public abstract class TechnicalMixin extends Level {
         );
     }
 
-    @ModifyConstant(method = "animateTick", constant = @Constant(intValue = 667))
+    @ModifyConstant(method = "animateTick", constant = @Constant(intValue = 667), require = 0)
     public int effective$multiplyRandomBlockDisplayTicksFrequency(int constant) {
         return (int) Math.round(667 * EffectiveConfig.randomBlockDisplayTicksFrequencyMultiplier.get());
     }
 
-    @ModifyConstant(method = "animateTick", constant = @Constant(intValue = 16))
+    @ModifyConstant(method = "animateTick", constant = @Constant(intValue = 16), require = 0)
     public int effective$overwriteRandomBlockDisplayTicksDistanceClose(int constant) {
         return EffectiveConfig.randomBlockDisplayTicksDistanceClose.get();
     }
 
-    @ModifyConstant(method = "animateTick", constant = @Constant(intValue = 32))
+    @ModifyConstant(method = "animateTick", constant = @Constant(intValue = 32), require = 0)
     public int effective$overwriteRandomBlockDisplayTicksDistanceFar(int constant) {
         return EffectiveConfig.randomBlockDisplayTicksDistanceFar.get();
     }
