@@ -1,11 +1,11 @@
-package concerrox.effective.forge
+package concerrox.effective.neoforge
 
 import concerrox.effective.Effective
 import concerrox.effective.EffectiveConfig
 import concerrox.effective.effect.CascadeManager
 import concerrox.effective.effect.GlowSquidHypnosisManager
-import concerrox.effective.forge.shader.ModShaders2
-import concerrox.effective.forge.shader.ParticleEngineClientExtensions
+import concerrox.effective.neoforge.shader.ModShaders2
+import concerrox.effective.neoforge.shader.ParticleEngineClientExtensions
 import concerrox.effective.isSatinInstalled
 import concerrox.effective.particle.model.SplashBottomModel
 import concerrox.effective.particle.model.SplashBottomRimModel
@@ -15,8 +15,8 @@ import concerrox.effective.registry.ModParticles
 import concerrox.effective.registry.ModSounds
 import concerrox.effective.render.ModShaders
 import concerrox.effective.screenshake.ScreenShakeManager
-import ladysnake.satin.api.event.EntitiesPreRenderCallback
-import ladysnake.satin.api.event.ShaderEffectRenderCallback
+import dev.cammiescorner.velvet.api.event.EntitiesPreRenderCallback
+import dev.cammiescorner.velvet.api.event.ShaderEffectRenderCallback
 import net.minecraft.client.Minecraft
 import net.minecraft.client.particle.ParticleEngine
 import net.minecraft.client.particle.ParticleProvider
@@ -24,67 +24,67 @@ import net.minecraft.client.particle.SpriteSet
 import net.minecraft.core.Registry
 import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.core.particles.ParticleType
+import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent
-import net.minecraftforge.client.event.EntityRenderersEvent
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent
-import net.minecraftforge.client.event.RegisterShadersEvent
-import net.minecraftforge.event.TickEvent
-import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.config.ModConfig
-import net.minecraftforge.registries.DeferredRegister
-import net.minecraftforge.registries.ForgeRegistries
-import net.minecraftforge.registries.IForgeRegistry
-import net.minecraftforge.registries.RegistryBuilder
-import net.minecraftforge.registries.RegistryObject
-import thedarkcolour.kotlinforforge.forge.FORGE_BUS
-import thedarkcolour.kotlinforforge.forge.LOADING_CONTEXT
-import thedarkcolour.kotlinforforge.forge.MOD_BUS
+import net.minecraft.resources.ResourceLocation
+import net.neoforged.fml.ModContainer
+import net.neoforged.fml.ModList
+import net.neoforged.fml.common.Mod
+import net.neoforged.fml.config.ModConfig
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent
+import net.neoforged.neoforge.client.event.ClientTickEvent
+import net.neoforged.neoforge.client.event.EntityRenderersEvent
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent
+import net.neoforged.neoforge.client.event.RegisterShadersEvent
+import net.neoforged.neoforge.registries.DeferredRegister
+import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
+import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 import java.util.function.Supplier
 
 
 @Mod(Effective.MOD_ID)
-object EffectiveForge {
+class EffectiveNeoForge(modContainer: ModContainer) {
 
+    companion object {
+        private val PARTICLE_RESOURCE_KEY: ResourceKey<Registry<ParticleType<*>>> = ResourceKey.createRegistryKey(
+            Effective.id("particle_type"))
+        private val PARTICLE_REGISTRY: DeferredRegister<ParticleType<*>> = DeferredRegister.create(
+            PARTICLE_RESOURCE_KEY, Effective.MOD_ID)
 
-    private val PARTICLE_RESOURCE_KEY: ResourceKey<Registry<ParticleType<*>>> = ResourceKey.createRegistryKey(
-        Effective.id("particle_type"))
-    private val PARTICLE_REGISTRY: DeferredRegister<ParticleType<*>> = DeferredRegister.create(PARTICLE_RESOURCE_KEY,
-        Effective.MOD_ID)
-
-    // Disable the syncing of the registry to prevent "unregistered object on dedicated server"
-    internal val PARTICLE_REGISTRY_CLIENT: Supplier<IForgeRegistry<ParticleType<*>>> = PARTICLE_REGISTRY.makeRegistry {
-        RegistryBuilder<ParticleType<*>>().disableSaving().disableSync()
+        // Disable the syncing of the registry to prevent "unregistered object on dedicated server"
+        internal val PARTICLE_REGISTRY_CLIENT: Registry<ParticleType<*>> = PARTICLE_REGISTRY.makeRegistry { builder ->
+            builder.sync(false)
+        }
     }
 
     init {
         Effective.onInitialize()
         ModAmbientConditionsForge.initialize()
 
-        LOADING_CONTEXT.registerConfig(ModConfig.Type.CLIENT, EffectiveConfig.configSpec)
+        modContainer.registerConfig(ModConfig.Type.CLIENT, EffectiveConfig.configSpec)
 
         PARTICLE_REGISTRY.apply {
             ModParticles.PARTICLES.forEach {
-                it.extra = register(it.id.path, it.type::value)
+                it.extra = register(it.id.path, it.type::value).id
             }
         }.register(MOD_BUS)
 
-        DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Effective.MOD_ID).apply {
+        DeferredRegister.create(Registries.SOUND_EVENT, Effective.MOD_ID).apply {
             ModSounds.SOUNDS.forEach {
-                register(it.location.path) { it }
+                register(it.location.path, Supplier { it })
             }
         }.register(MOD_BUS)
 
         MOD_BUS.addListener { _: RegisterParticleProvidersEvent ->
             fun <O : ParticleOptions, T : ParticleType<O>> register(
-                type: RegistryObject<T>,
+                type: ResourceLocation,
                 registration: ParticleEngine.SpriteParticleRegistration<O>,
             ) = (Minecraft.getInstance().particleEngine as ParticleEngineClientExtensions).`effective$register`(type,
                 registration)
 
             ModParticles.PARTICLES.forEach {
                 @Suppress("UNCHECKED_CAST") register(
-                    it.extra as RegistryObject<ParticleType<ParticleOptions>>,
+                    it.extra as ResourceLocation,
                     it.provider as (SpriteSet) -> ParticleProvider<ParticleOptions>,
                 )
             }
@@ -112,34 +112,30 @@ object EffectiveForge {
                 SplashBottomRimModel.Companion::createBodyLayer)
         }
 
-        FORGE_BUS.addListener { event: TickEvent.ClientTickEvent ->
-            if (event.phase == TickEvent.Phase.END) {
-                CascadeManager.tick()
-                ScreenShakeManager.tick()
-            }
+        FORGE_BUS.addListener { _: ClientTickEvent.Post ->
+            CascadeManager.tick()
+            ScreenShakeManager.tick()
         }
 
         FORGE_BUS.addListener { _: ClientPlayerNetworkEvent.LoggingOut ->
             CascadeManager.reset()
         }
 
-        if (isSatinInstalled()) {
+        if (ModList.get().isLoaded("velvet")) {
             GlowSquidHypnosisManager.RAINBOW_SHADER // Force to load the shader
 
-            FORGE_BUS.addListener { event: TickEvent.ClientTickEvent ->
-                if (event.phase == TickEvent.Phase.END) {
-                    GlowSquidHypnosisManager.rainbowTimer++
-                }
+            FORGE_BUS.addListener { _: ClientTickEvent.Post ->
+                GlowSquidHypnosisManager.rainbowTimer++
             }
 
-            FORGE_BUS.addListener { event: ShaderEffectRenderCallback ->
-                GlowSquidHypnosisManager.onShaderEffectRendered(event.tickDelta)
+            ShaderEffectRenderCallback.EVENT.register { tickDelta ->
+                GlowSquidHypnosisManager.onShaderEffectRendered(tickDelta)
             }
 
-            FORGE_BUS.addListener { event: EntitiesPreRenderCallback ->
-                GlowSquidHypnosisManager.rainbowSTime.set(
-                    (GlowSquidHypnosisManager.rainbowTimer + event.tickDelta) * 0.05F)
+            EntitiesPreRenderCallback.EVENT.register { _, _, tickDelta ->
+                GlowSquidHypnosisManager.rainbowSTime.set((GlowSquidHypnosisManager.rainbowTimer + tickDelta) * 0.05F)
             }
+
         }
     }
 }
