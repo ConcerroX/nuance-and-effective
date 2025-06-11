@@ -6,6 +6,7 @@ val kotlinForNeoForgeVersion: String by rootProject
 val configuredForgeVersion: String by rootProject
 val velvetVersion: String by rootProject
 val sparkweaveVersion: String by rootProject
+val effectiveModId: String by rootProject
 
 plugins {
     id("com.gradleup.shadow")
@@ -68,4 +69,5 @@ tasks.shadowJar {
 
 tasks.remapJar {
     inputFile.set(tasks.shadowJar.get().archiveFile)
+    atAccessWideners.add("$effectiveModId.accesswidener")
 }
