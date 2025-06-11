@@ -5,6 +5,7 @@ val mixinExtrasVersion: String by rootProject
 val kotlinForForgeVersion: String by rootProject
 val configuredForgeVersion: String by rootProject
 val satinForgeVersion: String by rootProject
+val effectiveModId: String by rootProject
 
 plugins {
     id("com.github.johnrengelman.shadow")
@@ -67,4 +68,5 @@ tasks.shadowJar {
 
 tasks.remapJar {
     inputFile.set(tasks.shadowJar.get().archiveFile)
+    atAccessWideners.add("$effectiveModId.accesswidener")
 }

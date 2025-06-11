@@ -1,4 +1,5 @@
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 
 val effectiveModId: String by project
 val effectiveModVersion: String by rootProject
